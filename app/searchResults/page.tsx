@@ -29,6 +29,8 @@ const SearchResults = () => {
     },
   });
 
+  const [sortDel, setSortDel] = useState(false)
+
   const setHousingParameters = (houseSearchParameters: HousingSearchParameters) => {
     console.log('Housing parameters', houseSearchParameters);
   };
@@ -56,6 +58,31 @@ const SearchResults = () => {
     const updatedSort = { ...filters, sort: sortFields };
     setFilters(updatedSort);
   };
+
+  const handleFilterClear = (filterType: string, filterKey: string) => {
+    const updatedFilters = { ...filters };
+
+    if (filterType === 'filters') {
+      if (Array.isArray(updatedFilters.filters[filterKey])) {
+        updatedFilters.filters[filterKey] = [];
+      } else {
+        delete updatedFilters.filters[filterKey];
+      }
+    } else if (filterType === 'sort') {
+      setSortDel(true)
+      if (filterKey === 'price') {
+        updatedFilters.sort[filterKey] = { from: '', to: '' }; // Reset price range specifically
+      } else {
+        updatedFilters.sort[filterKey] = ''; // Clear other sort values
+      }
+    }
+
+    console.log('updatedFilters after delete', updatedFilters);
+
+    setFilters(updatedFilters);
+  };
+  
+
 
   return (
     <div>
@@ -102,7 +129,6 @@ const SearchResults = () => {
 
         {/* Display Filters */}
         <div className={styles.page__filterContainer}>
-          <h4>Applied Filters:</h4>
           {Object.entries(filters.filters).map(([key, value]) =>
             Array.isArray(value) && value.length > 0 ? (
               <div className={styles.page__filterContainer__filterBox} key={key}>
@@ -112,7 +138,7 @@ const SearchResults = () => {
                 <div className={styles.page__filterContainer__filterBox__filterResult}>
                   {value.join(', ')}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__crossIcon}>
+                <div className={styles.page__filterContainer__filterBox__crossIcon} onClick={() => handleFilterClear('filters', key)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
@@ -132,7 +158,10 @@ const SearchResults = () => {
           )}
           {Object.entries(filters.sort).map(([key, value]) =>
             value ? (
-              <div className={styles.page__filterContainer__filterBox} key={key}>
+              <div className={styles.page__filterContainer__filterBox} key={key} 
+              style={{
+                display: value ? 'flex' : 'none'
+              }}>
                 <div className={styles.page__filterContainer__filterBox__filterLabel}>
                   {key.charAt(0).toUpperCase() + key.slice(1)}
                 </div>
@@ -143,7 +172,8 @@ const SearchResults = () => {
                       .join(', ')
                     : value}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__crossIcon}>
+                <div className={styles.page__filterContainer__filterBox__crossIcon} 
+                onClick={() => handleFilterClear('sort', key)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
@@ -161,7 +191,7 @@ const SearchResults = () => {
               </div>
             ) : null
           )}
-          {filters.filters.price?.from && filters.filters.price?.to ? (
+          {filters.filters.price?.from && filters.filters.price?.to  && filters.filters.price?.from!='' && filters.filters.price?.to!='' ? (
             <div className={styles.page__filterContainer__filterBox}>
               <div className={styles.page__filterContainer__filterBox__filterLabel}>
                 Price

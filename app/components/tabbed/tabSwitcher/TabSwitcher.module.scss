@@ -64,5 +64,9 @@
 }
 
 .lefAlignedTabsContiner{
-  margin: 0 7rem;
+  margin: auto;
+
+  @media  (min-width:1920px){
+    margin: 0 7rem;
+  }
 }

@@ -69,32 +69,6 @@ export default function resultCard({ numberOfResults, onFiltersChange }: ResultC
     handleFiltersChange('additionally', newFilters);
   };
 
-  const testListing: ListingDTO = {
-    id: '1',
-    imageURL: listingSampleImage.src,
-    isFavorite: false,
-    listingType: 'apartment',
-    title: 'The Wave Studios',
-    roomCount: 2,
-    bathroomCount: 2,
-    location: 'Canggu',
-    lowestOffer: {
-      price: {
-        currencyISO: 'USD',
-        value: 50,
-      },
-      duration: 'day',
-    },
-  }
-
-  const listings: Promise<ListingDTO[]> = Promise.resolve(
-    [1, 2, 3, 4, 5, 6].map((i) => {
-      return {
-        ...testListing,
-        id: `${i}`,
-      }
-    })
-  )
   
   return (
     <div className={styles.background}>
@@ -114,7 +88,10 @@ export default function resultCard({ numberOfResults, onFiltersChange }: ResultC
           </div>
         </div>
         <div className={styles.background__cards}>
-          <PopularListings listings={listings} />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
         </div>
       </div>
 
