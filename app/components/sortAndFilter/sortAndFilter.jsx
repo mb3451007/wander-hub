@@ -3,10 +3,16 @@ import SortFields from './sortFields/sortFields'
 import styles from './sortAndFilter.module.scss';
 
 
-export default function sortAndFilter({onChange}) {
+export default function sortAndFilter({onChange, filterKey }) {
     const sortFieldsObj = (sortObj) => {
         onChange(sortObj)
     };
+
+    const handleFilterClear = () => {
+        console.log('sort fk', filterKey)
+      };
+
+      handleFilterClear()
 
     return (
         <div className={styles.parentCont}>

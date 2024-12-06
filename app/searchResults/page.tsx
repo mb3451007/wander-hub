@@ -14,6 +14,7 @@ import Tabbed from '../components/tabbed/Tabbed';
 import styles from './searchResults.module.scss';
 
 const SearchResults = () => {
+  const [clearSort, setClearSort] = useState('')
   const [filters, setFilters] = useState<any>({
     filters: {
       additionally: [],
@@ -71,17 +72,21 @@ const SearchResults = () => {
     } else if (filterType === 'sort') {
       setSortDel(true)
       if (filterKey === 'price') {
-        updatedFilters.sort[filterKey] = { from: '', to: '' }; // Reset price range specifically
+        updatedFilters.sort[filterKey] = { from: '', to: '' };
+        setClearSort(filterKey) // Reset price range specifically
       } else {
-        updatedFilters.sort[filterKey] = ''; // Clear other sort values
+        updatedFilters.sort[filterKey] = '';
+        setClearSort(filterKey) // Clear other sort values
       }
     }
+    if (filters.sort.price.from === '' && filters.sort.price.to === '')
+      console.log(1)
 
-    console.log('updatedFilters after delete', updatedFilters);
+    console.log('updatedFilter after delete', updatedFilters);
 
     setFilters(updatedFilters);
   };
-  
+
 
 
   return (
@@ -125,7 +130,7 @@ const SearchResults = () => {
         />
 
         <FilterBox />
-        <SortAndFilter onChange={handleSortFields} />
+        <SortAndFilter onChange={handleSortFields} filterKey={filterKey} />
 
         {/* Display Filters */}
         <div className={styles.page__filterContainer}>
@@ -157,11 +162,11 @@ const SearchResults = () => {
             ) : null
           )}
           {Object.entries(filters.sort).map(([key, value]) =>
-            value ? (
-              <div className={styles.page__filterContainer__filterBox} key={key} 
-              style={{
-                display: value ? 'flex' : 'none'
-              }}>
+            key !== 'price' && value ? (
+              <div className={styles.page__filterContainer__filterBox} key={key}
+                style={{
+                  display: value ? 'flex' : 'none'
+                }}>
                 <div className={styles.page__filterContainer__filterBox__filterLabel}>
                   {key.charAt(0).toUpperCase() + key.slice(1)}
                 </div>
@@ -172,8 +177,8 @@ const SearchResults = () => {
                       .join(', ')
                     : value}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__crossIcon} 
-                onClick={() => handleFilterClear('sort', key)}>
+                <div className={styles.page__filterContainer__filterBox__crossIcon}
+                  onClick={() => handleFilterClear('sort', key)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
@@ -191,15 +196,16 @@ const SearchResults = () => {
               </div>
             ) : null
           )}
-          {filters.filters.price?.from && filters.filters.price?.to  && filters.filters.price?.from!='' && filters.filters.price?.to!='' ? (
+
+          {filters.sort.price.from !== '' && filters.sort.price.to !== '' ? (
             <div className={styles.page__filterContainer__filterBox}>
               <div className={styles.page__filterContainer__filterBox__filterLabel}>
                 Price
               </div>
               <div className={styles.page__filterContainer__filterBox__filterResult}>
-                {`${filters.filters.price.from} - ${filters.filters.price.to}`}
+                {`₱${filters.sort.price.from} - ₱${filters.sort.price.to}`}
               </div>
-              <div className={styles.page__filterContainer__filterBox__crossIcon}>
+              <div className={styles.page__filterContainer__filterBox__crossIcon} onClick={() => handleFilterClear('sort', 'price')}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="10"
@@ -216,6 +222,7 @@ const SearchResults = () => {
               </div>
             </div>
           ) : null}
+
 
         </div>
 
