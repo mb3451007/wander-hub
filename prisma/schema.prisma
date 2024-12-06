@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContactType {
+  email
+  telegram
+  phone
+}
+
+model UserDetails {
+  userId         String           @id @default(uuid()) @db.Uuid
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  ContactDetails ContactDetails[]
+}
+
+model ContactDetails {
+  userId      String      @db.Uuid
+  user        UserDetails @relation(fields: [userId], references: [userId])
+  contactType ContactType
+  contact     String
+
+  @@unique([contactType, contact])
+  @@unique([userId, contactType])
+}
+
+model Location {
+  id             String           @id @unique
+  country        String
+  russianName    String
+  englishName    String
+  longitude      Float
+  latitude       Float
+  HousingDetails HousingDetails[]
+}
+
+enum ListingType {
+  housing
+  bike
+}
+
+model Listing {
+  listingId   String      @id @unique @default(uuid()) @db.Uuid
+  listingType ListingType
+  title       String
+  // Check if there is a limit on String or if we need a bigger type
+  description String
+  active      Boolean
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
+
+  ListingMedia   ListingMedia[]
+  HousingDetails HousingDetails?
+  Bike           BikeDetails?
+  ListingOffer   ListingOffer[]
+}
+
+enum OfferType {
+  sale
+  leasing
+  daily_rental
+  monthly_rental
+  yearly_rental
+  rental
+}
+
+enum Currency {
+  euro
+  us_dollar
+  indonesian_rupiah
+}
+
+model ListingOffer {
+  listingId String    @db.Uuid
+  listing   Listing   @relation(fields: [listingId], references: [listingId])
+  price     Int
+  offerType OfferType
+  currency  Currency
+
+  @@unique([listingId, offerType])
+}
+
+model HousingType {
+  id             String           @id @unique
+  russianName    String
+  englishName    String
+  HousingDetails HousingDetails[]
+}
+
+enum MediaType {
+  picture
+  video
+}
+
+model ListingMedia {
+  listingId String    @db.Uuid
+  listing   Listing   @relation(fields: [listingId], references: [listingId])
+  mediaType MediaType
+  mediaUrl  String    @unique
+  nsfwScore Float     @default(0.5)
+  active    Boolean
+  createdAt DateTime  @default(now())
+
+  @@unique([listingId, mediaUrl])
+}
+
+model HousingDetails {
+  listingId          String      @unique @db.Uuid
+  listing            Listing     @relation(fields: [listingId], references: [listingId])
+  housingType        HousingType @relation(fields: [housingTypeId], references: [id])
+  bedroomCount       Int
+  bathroomCount      Int
+  kitchenCount       Int
+  storeyCount        Int
+  locationId         String
+  location           Location    @relation(fields: [locationId], references: [id])
+  totalAreaInM2      Int
+  petsAllowed        Boolean
+  constructionNearBy Boolean
+  parking            Boolean
+  pool               Boolean
+  availabilityDate   DateTime?
+  housingTypeId      String
+}
+
+enum BikeType {
+  supersport
+  scooter
+  chopper
+}
+
+model BikeDetails {
+  listingId             String   @unique @db.Uuid
+  listing               Listing  @relation(fields: [listingId], references: [listingId])
+  firstRegistrationYear Int
+  modelYear             Int
+  brand                 String
+  model                 String
+  type                  BikeType
+  color                 String
+  engineVolume          Float
+  enginePowerInHP       Int
+  absAvailable          Boolean
+}

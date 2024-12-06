@@ -1,0 +1,51 @@
+.popularListings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @media screen and (min-width: 801px) {
+    background: var(--light-grey, #f6f6f6);
+    padding-left: 130px;
+    padding-right: 130px;
+  }
+
+  &__title {
+    color: #000;
+    text-align: center;
+    font-family: Lato;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 46px;
+    padding-bottom: 20px;
+
+    @media screen and (min-width: 801px) {
+      text-align: left;
+      font-size: 58px;
+      line-height: 68px;
+    }
+  }
+
+  &__listings {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media screen and (min-width: 801px) {
+      flex-wrap: wrap;
+
+      column-gap: 29px;
+      row-gap: 35px;
+    }
+  }
+}

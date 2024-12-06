@@ -1,0 +1,44 @@
+.howItWorks {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+
+  @media screen and (min-width: 801px) {
+    margin-left: 130px;
+    margin-right: 130px;
+  }
+
+  &__title {
+    color: #000;
+    text-align: center;
+    font-family: Lato;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 46px;
+    margin-bottom: 16px;
+
+    @media screen and (min-width: 801px) {
+      font-size: 58px;
+      line-height: 68px;
+      align-self: first baseline;
+      text-align: left;
+    }
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    @media screen and (min-width: 801px) {
+      align-self: first baseline;
+    }
+
+    @media screen and (min-width: 801px) {
+      flex-direction: row;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.homePage {
+  display: flex;
+  background: white;
+  color: black;
+  flex-direction: column;
+  justify-self: center;
+  width: -webkit-fill-available;
+
+  &__container {
+    display: flex;
+
+    flex-direction: column;
+    justify-items: center;
+    align-self: center;
+    width: 100%;
+  }
+}

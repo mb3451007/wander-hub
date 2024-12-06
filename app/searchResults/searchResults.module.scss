@@ -1,0 +1,100 @@
+.page{
+    background: var(--white, #FFF);;
+    color: black;
+
+    &__filterContainer{
+        display: none;
+        width: 1138px;
+        align-items: center;
+        align-content: center;
+        gap: 20px 28px;
+        flex-wrap: wrap;
+        margin: 0 9rem;
+
+        &__filterBox{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            &__filterLabel{
+                color: #000;
+                font-family: Lato;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+            }
+
+            &__filterResult{
+                color: #000;
+                font-family: Lato;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+
+            &__crossIcon{
+                display: flex;
+                width: 12px;
+                height: 12px;
+                padding: 1.518px 1.481px 1.481px 1.518px;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        @media (max-width:1920px){
+            display: flex;
+        }
+    }
+
+    &__homeBreadcrumb{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 1.5rem 1rem 0 1rem;
+
+        &__homeLogo{
+            display: flex;
+            width: 24px;
+            height: 24px;
+            padding: 2px;
+            justify-content: center;
+            align-items: center;
+            color: #000000;
+        }
+
+        &__home{
+            color: #000;
+            // font-family: Lato;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        &__resultsOptionsLogo{
+            width: 16px;
+            height: 16px;
+            color: #CBCBCB;
+        }
+
+        &__resultsOptions{
+            color: var(--light-gray, #CBCBCB);
+            // font-family: Lato;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        @media (min-width: 768px) {
+            margin: 3rem 4rem 0 4rem;
+        }
+
+        @media (min-width: 1920px) {
+            margin: 3rem 4rem 0 9rem;
+        }
+    }
+}

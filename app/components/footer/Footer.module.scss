@@ -1,0 +1,123 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  background: black;
+  padding: 18px;
+
+  gap: 17px;
+
+  @media screen and (min-width: 801px) {
+    flex-direction: row;
+    padding-left: 130px;
+    padding-top: 130px;
+    padding-right: 130px;
+    padding-bottom: 84px;
+  }
+
+  &__descriptionAndLogo {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 801px) {
+      margin-right: 30%;
+    }
+
+    &__description {
+      align-self: stretch;
+      color: var(--white, #fff);
+      font-family: Lato;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 26px;
+      letter-spacing: 0.32px;
+
+      @media screen and (min-width: 801px) {
+        font-size: 24px;
+        line-height: 34px;
+        letter-spacing: 0.48px;
+      }
+    }
+  }
+
+  &__separator {
+    width: 98%;
+    align-self: center;
+    margin-bottom: -15px;
+
+    @media screen and (min-width: 801px) {
+      display: none;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+
+    @media screen and (min-width: 801px) {
+      gap: 30px;
+    }
+    &__link {
+      color: #fff;
+      font-family: Lato;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 19.2px */
+      letter-spacing: 0.32px;
+
+      @media screen and (min-width: 801px) {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 150%;
+        letter-spacing: 0.4px;
+      }
+    }
+  }
+
+  &__legalAndSocial {
+    gap: 30px;
+    @media screen and (min-width: 801px) {
+      gap: 30px;
+
+      height: 100%;
+      margin-left: 100px;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__socialLinks {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    &__link {
+      color: limegreen;
+      align-self: first baseline;
+      & > svg {
+        fill: white;
+        background-clip: border-area;
+        stroke: limegreen;
+        stroke-opacity: 1;
+      }
+    }
+  }
+
+  &__copyright {
+    color: #fff;
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 18px */
+    letter-spacing: 0.24px;
+    @media screen and (min-width: 801px) {
+      align-self: last baseline;
+      font-size: 20px;
+      letter-spacing: 0.4px;
+      padding-top: 80%;
+    }
+  }
+}

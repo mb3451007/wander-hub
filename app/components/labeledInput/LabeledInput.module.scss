@@ -1,0 +1,14 @@
+.labeledInput {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__label {
+    color: #000;
+    font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}

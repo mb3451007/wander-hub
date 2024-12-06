@@ -1,0 +1,70 @@
+.background {
+  background: var(--light-grey, #f6f6f6);
+  flex-shrink: 0;
+  padding: 1.5rem 1rem 4rem 1rem;
+
+  &__cardsAndFilter {
+    @media (min-width: 1920px) {
+        display: grid;
+        grid-template-columns: 35% 65%;
+        gap: 5rem;
+      }
+  }
+
+  &__filterContainer {
+    display: none;
+    padding: 34px 20px;
+    justify-content: space-between;
+    border-radius: 16px;
+    border: 1px solid var(--black-30, rgba(0, 0, 0, 0.3));
+
+    &__filter{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 54px;
+    }
+
+    @media (min-width: 1920px) {
+      display: inline-flex;
+    }
+  }
+
+  &__resultsNumber {
+    color: var(--black, #000);
+    // font-family: Lato;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 171.429% */
+    margin: 0 0 1rem 0;
+
+    @media (min-width: 1920px) {
+        display: none;
+      }
+  }
+
+  &__cards {
+    display: grid;
+    gap: 2%;
+
+    grid-template-columns: 100%;
+
+    @media (min-width: 768px) and (max-width: 1919px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1920px) {
+      width: 92.5%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    padding: 1.5rem 4rem 4rem 4rem;
+    background-color: white;
+  }
+
+  @media (min-width: 1920px) {
+    padding: 1.5rem 9rem 4rem 9rem;
+  }
+}

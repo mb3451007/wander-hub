@@ -1,0 +1,144 @@
+.card {
+  display: flex;
+  width: 330px;
+  height: 286px;
+  padding: 20px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid var(--Grays-Black, #000);
+
+  @media screen and (min-width: 801px) {
+    width: 33%;
+    height: 567px;
+  }
+
+  &__sequenceAndIcon {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+
+    &__sequence {
+      color: var(--black, #000);
+      font-family: Lato;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 38px;
+      justify-self: first baseline;
+
+      @media screen and (min-width: 801px) {
+        font-size: 52px;
+        line-height: 82px;
+      }
+
+      &::after {
+        content: '.';
+        font-family: Lato;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 38px;
+
+        @media screen and (min-width: 801px) {
+          font-size: 52px;
+          line-height: 82px;
+        }
+      }
+    }
+
+    &__icon {
+      align-self: center;
+      justify-self: last baseline;
+      stroke-width: 1px;
+    }
+  }
+
+  &__title {
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 34px;
+    text-transform: uppercase;
+
+    @media screen and (min-width: 801px) {
+      font-size: 42px;
+      line-height: 64px;
+      height: 30%;
+    }
+  }
+
+  &__content {
+    align-self: stretch;
+    color: var(--black, #000);
+    font-family: Lato;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px; /* 162.5% */
+
+    @media screen and (min-width: 801px) {
+      font-size: 32px;
+      line-height: 42px; /* 131.25% */
+    }
+  }
+
+  &:nth-child(even) {
+    background: #cef27e;
+
+    .card {
+      &__sequenceAndIcon {
+        &__sequence {
+          &::after {
+            color: #ffffff;
+          }
+        }
+
+        &__icon {
+          svg {
+            stroke: black;
+          }
+          path {
+            fill: black;
+          }
+        }
+      }
+
+      &__title {
+        color: var(--white, #fff);
+      }
+    }
+  }
+
+  &:nth-child(odd) {
+    background: #ffffff;
+
+    .card {
+      &__sequenceAndIcon {
+        &__sequence {
+          &::after {
+            color: #cef27e;
+          }
+        }
+
+        &__icon {
+          svg {
+            stroke: #cef27e;
+          }
+
+          path {
+            fill: #cef27e;
+          }
+        }
+      }
+
+      &__title {
+        color: var(--black-30, rgba(0, 0, 0, 0.3));
+      }
+    }
+  }
+}

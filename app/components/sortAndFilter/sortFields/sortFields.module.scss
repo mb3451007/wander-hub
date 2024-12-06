@@ -1,0 +1,227 @@
+.container {
+    padding: 1rem 4rem;
+
+    &__sortFields {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+
+        &__upperSection {
+            display: grid;
+            grid-template-columns: 49% 49%;
+            gap: 1rem;
+
+            
+            @media (min-width: 1920px) {
+                width: 24%;
+                grid-template-columns: 50% 50%;
+                gap: 0;
+            }
+        }
+
+        &__lowerSection {
+            display: grid;
+            grid-template-columns: 49% 49%;
+            gap: 1rem;
+
+            
+            @media (min-width: 1920px) {
+                grid-template-columns: 43% 43% 30% 30%;
+                gap: 2rem;
+            }
+        }
+
+        &__results {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #000000;
+
+            &__resultsFound {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                color: var(--black, #000);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 26px;
+                /* 162.5% */
+            }
+
+            &__icon {
+                width: 1px;
+                height: 24px;
+            }
+
+            &__sortBy {
+                color: var(--black, #000);
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+
+        &__date,
+        &__stay,
+        &__location,
+        &__priceFrom,
+        &__priceTo {
+            position: relative;
+            appearance: none;
+            display: flex;
+            padding: 11px 16px;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            border-radius: 8px;
+            border: 1.5px solid var(--black-30, rgba(0, 0, 0, 0.30));
+            background: var(--White, #FFF);
+        }
+
+        &__date {
+            position: relative;
+            color: black;
+
+            &__text {
+                font-family: Lato;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 18px;
+                /* 112.5% */
+                letter-spacing: 0.32px;
+            }
+
+            &__arrowIcon {
+                position: absolute;
+                top: 51.25rem;
+                right: 4.5rem;
+                transform: translateY(-50%);
+                pointer-events: none;
+                display: flex;
+                width: 24px;
+                height: 24px;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                color: black;
+            }
+        }
+
+        &__stay,
+        &__location {
+            color: var(--black-30, rgba(0, 0, 0, 0.30));
+            width: 100%;
+
+            &__text {
+                color: var(--black-30, rgba(0, 0, 0, 0.30));
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 18px;
+                /* 112.5% */
+                letter-spacing: 0.32px;
+            }
+        }
+
+        &__stay {
+            &__arrowIcon {
+                position: absolute;
+                top: 55.25rem;
+                right: 25.5rem;
+                transform: translateY(-50%);
+                pointer-events: none;
+                display: flex;
+                width: 24px;
+                height: 24px;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                color: black;
+            }
+        }
+
+        &__location {
+            &__arrowIcon {
+                position: absolute;
+                top: 55.25rem;
+                right: 4.5rem;
+                transform: translateY(-50%);
+                pointer-events: none;
+                display: flex;
+                width: 24px;
+                height: 24px;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+                color: black;
+            }
+        }
+
+        &__priceFrom {
+            color: var(--black-30, rgba(0, 0, 0, 0.30));
+            width: 100%;
+
+            &__priceIcon {
+                width: 24px;
+                height: 24px;
+                flex-shrink: 0;
+                position: absolute;
+                top: 58rem;
+                right: 25.5rem;
+            }
+
+            ::placeholder {
+                color: var(--black-30, rgba(0, 0, 0, 0.30));
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 18px;
+                /* 112.5% */
+                letter-spacing: 0.32px;
+            }
+        }
+
+        &__priceTo {
+            color: var(--black-30, rgba(0, 0, 0, 0.30));
+            width: 100%;
+
+            &__priceIcon {
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                flex-shrink: 0;
+                position: absolute;
+                top: 58rem;
+                right: 4.5rem;
+            }
+
+            ::placeholder {
+                color: var(--black-30, rgba(0, 0, 0, 0.30));
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 18px;
+                /* 112.5% */
+                letter-spacing: 0.32px;
+            }
+        }
+
+
+
+        @media (min-width: 768px) {
+            display: flex;
+        }
+
+        @media (min-width: 1920px) {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+    }
+    @media (min-width: 1920px) {
+        padding: 1rem 9rem 1rem 9.25rem;
+    }
+}

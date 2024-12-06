@@ -1,0 +1,96 @@
+{
+  "housings": [
+    {
+      "type": "Apartment",
+      "type_ru": "Квартира"
+    },
+    {
+      "type": "House",
+      "type_ru": "Дом"
+    },
+    {
+      "type": "Duplex",
+      "type_ru": "Дуплекс"
+    },
+    {
+      "type": "Townhouse",
+      "type_ru": "Таунхаус"
+    },
+    {
+      "type": "Condominium",
+      "type_ru": "Кондоминиум"
+    },
+    {
+      "type": "Villa",
+      "type_ru": "Вилла"
+    },
+    {
+      "type": "Cottage",
+      "type_ru": "Коттедж"
+    },
+    {
+      "type": "Bungalow",
+      "type_ru": "Бунгало"
+    },
+    {
+      "type": "Mobile Home",
+      "type_ru": "Мобильный дом"
+    },
+    {
+      "type": "Loft",
+      "type_ru": "Лофт"
+    },
+    {
+      "EnglishName": "Detached house",
+      "RussianName": "Отдельный дом"
+    },
+    {
+      "EnglishName": "Semi-detached house",
+      "RussianName": "Семиприземка"
+    },
+    {
+      "EnglishName": "Townhouse",
+      "RussianName": "Таунхаус"
+    },
+    {
+      "EnglishName": "Duplex",
+      "RussianName": "Дуплекс"
+    },
+    {
+      "EnglishName": "Triplex",
+      "RussianName": "Триплексе"
+    },
+    {
+      "EnglishName": "Quadruplex",
+      "RussianName": "Квартира четырехэтажная"
+    },
+    {
+      "EnglishName": "Apartment",
+      "RussianName": "Квартира"
+    },
+    {
+      "EnglishName": "Condominium",
+      "RussianName": "Кондоминиум"
+    },
+    {
+      "EnglishName": "Terraced house",
+      "RussianName": "Серия домов"
+    },
+    {
+      "EnglishName": "Rowhouse",
+      "RussianName": "Роwedom"
+    },
+    {
+      "EnglishName": "Loft",
+      "RussianName": "Лофт"
+    },
+    {
+      "EnglishName": "Villa",
+      "RussianName": "Вилла"
+    },
+    {
+      "EnglishName": "Bungalow",
+      "RussianName": "Бунгало"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+.popularLocation {
+  flex: 0 0 auto;
+  width: 330px;
+  height: 400px;
+  background-size: 700px;
+  background-position-x: -30px;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  background-color: gray;
+  background-blend-mode: multiply;
+  border-radius: 10px;
+  scroll-snap-align: center;
+
+  &:nth-child(1) {
+    margin-left: 10px;
+  }
+
+  &:last-child {
+    margin-right: 10px;
+  }
+
+  &__locationName {
+  }
+}

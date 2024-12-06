@@ -1,0 +1,38 @@
+.priceInputs {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  &__currencyInput {
+    border-radius: 8px;
+    background: white;
+    max-width: 50%;
+    height: 42px;
+    padding-left: 12px;
+    color: black;
+  }
+
+  &__currency {
+    display: block;
+    align-content: center;
+    margin-left: -35px;
+    margin-right: auto;
+    font-size: 20px;
+  }
+
+  &__currencyInput::placeholder {
+    color: var(--black-30, rgba(0, 0, 0, 0.3));
+    padding-left: 12px;
+
+    font-family: 'Lato';
+    font-size: '14px';
+    font-style: 'normal';
+    font-weight: '500';
+    line-height: '18px';
+    letter-spacing: '0.28px';
+  }
+
+  &__currencyInput:invalid {
+    border-color: #dc143c;
+  }
+}

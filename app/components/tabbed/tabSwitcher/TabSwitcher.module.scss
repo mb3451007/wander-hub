@@ -1,0 +1,68 @@
+.tabSwitcher, .lefAlignedTabsContiner {
+  border-radius: 12px;
+  border: 1px solid var(--grey-30, rgba(143, 143, 143, 0.3));
+  padding: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  @media screen and (min-width: 801px) {
+    max-width: 292px;
+  }
+
+  &__tab {
+    width: 50%;
+    height: 44px;
+    padding: 3px;
+    text-align: center;
+    background: white;
+    color: black;
+    border-radius: 8px;
+    cursor: pointer;
+    align-content: center;
+    display: flex;
+    justify-content: space-around;
+    align-content: space-evenly;
+    align-items: center;
+    padding: 0px 35px;
+
+    & svg {
+      stroke: black;
+    }
+
+    & path {
+      stroke: black;
+      stroke-width: 0.4px;
+      fill: black;
+    }
+
+    &--active {
+      background: #000;
+      color: white;
+
+      & svg {
+        stroke: white;
+      }
+
+      & path {
+        stroke: white;
+        stroke-width: 0.4px;
+        fill: white;
+      }
+    }
+
+    transition-property: color background;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+  }
+}
+
+
+.tabSwitcher{
+  margin: auto;
+}
+
+.lefAlignedTabsContiner{
+  margin: 0 7rem;
+}
