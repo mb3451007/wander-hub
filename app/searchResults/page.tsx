@@ -1,17 +1,27 @@
 'use client'
 
-import React, { useState } from 'react';
-import Bike from '../icons/Bike';
-import BikeBasicSearch, { BikeSearchParameters } from '../components/basicSearch/bikeBasicSearch/BikeBasicSearch';
-import FilterBox from '../components/filterBox/filterBox';
-import Footer from '../components/footer/Footer';
-import Header from '../components/header/Header';
-import HousingBasicSearch, { HousingSearchParameters } from '../components/basicSearch/housingBasicSearch/HousingBasicSearch';
-import ResultCard from '../components/resultCard/resultCard';
-import SortAndFilter from '../components/sortAndFilter/sortAndFilter';
-import Stay from '../icons/Stay';
-import Tabbed from '../components/tabbed/Tabbed';
-import styles from './searchResults.module.scss';
+import React, { useState } from 'react'
+import Bike from '../icons/Bike'
+import BikeBasicSearch, {
+  BikeSearchParameters,
+} from '../components/basicSearch/bikeBasicSearch/BikeBasicSearch'
+import FilterBox from '../components/filterBox/filterBox'
+import Footer from '../components/footer/Footer'
+import Header from '../components/header/Header'
+import HousingBasicSearch, {
+  HousingSearchParameters,
+} from '../components/basicSearch/housingBasicSearch/HousingBasicSearch'
+import ResultCard from '../components/resultCard/resultCard'
+import SortAndFilter from '../components/sortAndFilter/sortAndFilter'
+import Stay from '../icons/Stay'
+import Tabbed from '../components/tabbed/Tabbed'
+import styles from './searchResults.module.scss'
+import { ListingDTO } from '../models/dtos/ListingDTO'
+import image1 from '../../assets/search-results-card-img.jpeg'
+import image2 from '../../assets/apartment-sample.jpeg'
+import image3 from '../../assets/apartment.jpeg'
+import image4 from '../../assets/bike.jpeg'
+import image5 from '../../assets/room.jpeg'
 
 const SearchResults = () => {
   const [filters, setFilters] = useState<any>({
@@ -27,17 +37,55 @@ const SearchResults = () => {
       price: { from: '', to: '' },
       stay: '',
     },
-  });
+  })
+
+  const testListing: ListingDTO = {
+    id: '1',
+    images: [
+      `${image1.src}`,
+      `${image2.src}`,
+      `${image3.src}`,
+      `${image4.src}`,
+      `${image5.src}`,
+    ],
+    isFavorite: false,
+    listingType: 'apartment',
+    title: 'The Wave Studios',
+    roomCount: 2,
+    bathroomCount: 2,
+    description:
+      'Our apartment features a sleek and modern design, with clean lines and upscale finishes that create a welcoming and elegant ambiance.',
+    location: 'Canggu',
+    lowestOffer: {
+      price: {
+        currencyISO: 'USD',
+        value: 50,
+      },
+      duration: 'day',
+    },
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const listings: Promise<ListingDTO[]> = Promise.resolve(
+    [1, 2, 3, 4, 5, 6].map((i) => {
+      return {
+        ...testListing,
+        id: `${i}`,
+      }
+    })
+  )
 
   const [sortDel, setSortDel] = useState(false)
 
-  const setHousingParameters = (houseSearchParameters: HousingSearchParameters) => {
-    console.log('Housing parameters', houseSearchParameters);
-  };
+  const setHousingParameters = (
+    houseSearchParameters: HousingSearchParameters
+  ) => {
+    console.log('Housing parameters', houseSearchParameters)
+  }
 
   const setBikeParameters = (bikeSearchParameters: BikeSearchParameters) => {
-    console.log('Bike search parameters', bikeSearchParameters);
-  };
+    console.log('Bike search parameters', bikeSearchParameters)
+  }
 
   const handleFiltersChange = (newFilters: any) => {
     const updatedFilters = {
@@ -50,39 +98,37 @@ const SearchResults = () => {
         ...filters.sort,
         ...newFilters.sort,
       },
-    };
-    setFilters(updatedFilters);
-  };
+    }
+    setFilters(updatedFilters)
+  }
 
   const handleSortFields = (sortFields: any) => {
-    const updatedSort = { ...filters, sort: sortFields };
-    setFilters(updatedSort);
-  };
+    const updatedSort = { ...filters, sort: sortFields }
+    setFilters(updatedSort)
+  }
 
   const handleFilterClear = (filterType: string, filterKey: string) => {
-    const updatedFilters = { ...filters };
+    const updatedFilters = { ...filters }
 
     if (filterType === 'filters') {
       if (Array.isArray(updatedFilters.filters[filterKey])) {
-        updatedFilters.filters[filterKey] = [];
+        updatedFilters.filters[filterKey] = []
       } else {
-        delete updatedFilters.filters[filterKey];
+        delete updatedFilters.filters[filterKey]
       }
     } else if (filterType === 'sort') {
       setSortDel(true)
       if (filterKey === 'price') {
-        updatedFilters.sort[filterKey] = { from: '', to: '' }; // Reset price range specifically
+        updatedFilters.sort[filterKey] = { from: '', to: '' } // Reset price range specifically
       } else {
-        updatedFilters.sort[filterKey] = ''; // Clear other sort values
+        updatedFilters.sort[filterKey] = '' // Clear other sort values
       }
     }
 
-    console.log('updatedFilters after delete', updatedFilters);
+    console.log('updatedFilters after delete', updatedFilters)
 
-    setFilters(updatedFilters);
-  };
-  
-
+    setFilters(updatedFilters)
+  }
 
   return (
     <div>
@@ -91,12 +137,24 @@ const SearchResults = () => {
         <div className={styles.page__homeBreadcrumb}>
           {/* Breadcrumb Navigation */}
           <div className={styles.page__homeBreadcrumb__homeLogo}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M1 11.157C1 8.86862 1 7.72441 1.5192 6.77587C2.0384 5.82734 2.98695 5.23863 4.88403 4.06125L6.88403 2.81999C8.88939 1.57541 9.8921 0.953125 11 0.953125C12.1079 0.953125 13.1106 1.57541 15.116 2.81999L17.116 4.06124C19.0131 5.23863 19.9616 5.82734 20.4808 6.77587C21 7.72441 21 8.86862 21 11.157V12.6781C21 16.5789 21 18.5294 19.8284 19.7412C18.6569 20.9531 16.7712 20.9531 13 20.9531H9C5.22876 20.9531 3.34315 20.9531 2.17157 19.7412C1 18.5294 1 16.5789 1 12.6781V11.157Z" stroke="black" strokeWidth="1.5" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+            >
+              <path
+                d="M1 11.157C1 8.86862 1 7.72441 1.5192 6.77587C2.0384 5.82734 2.98695 5.23863 4.88403 4.06125L6.88403 2.81999C8.88939 1.57541 9.8921 0.953125 11 0.953125C12.1079 0.953125 13.1106 1.57541 15.116 2.81999L17.116 4.06124C19.0131 5.23863 19.9616 5.82734 20.4808 6.77587C21 7.72441 21 8.86862 21 11.157V12.6781C21 16.5789 21 18.5294 19.8284 19.7412C18.6569 20.9531 16.7712 20.9531 13 20.9531H9C5.22876 20.9531 3.34315 20.9531 2.17157 19.7412C1 18.5294 1 16.5789 1 12.6781V11.157Z"
+                stroke="black"
+                strokeWidth="1.5"
+              />
             </svg>
           </div>
           <div className={styles.page__homeBreadcrumb__home}>Home</div>
-          <div className={styles.page__homeBreadcrumb__resultsOptions}>Search Options Results</div>
+          <div className={styles.page__homeBreadcrumb__resultsOptions}>
+            Search Options Results
+          </div>
         </div>
 
         <Tabbed
@@ -131,14 +189,28 @@ const SearchResults = () => {
         <div className={styles.page__filterContainer}>
           {Object.entries(filters.filters).map(([key, value]) =>
             Array.isArray(value) && value.length > 0 ? (
-              <div className={styles.page__filterContainer__filterBox} key={key}>
-                <div className={styles.page__filterContainer__filterBox__filterLabel}>
+              <div
+                className={styles.page__filterContainer__filterBox}
+                key={key}
+              >
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterLabel
+                  }
+                >
                   {key.charAt(0).toUpperCase() + key.slice(1)}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__filterResult}>
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterResult
+                  }
+                >
                   {value.join(', ')}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__crossIcon} onClick={() => handleFilterClear('filters', key)}>
+                <div
+                  className={styles.page__filterContainer__filterBox__crossIcon}
+                  onClick={() => handleFilterClear('filters', key)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
@@ -158,22 +230,35 @@ const SearchResults = () => {
           )}
           {Object.entries(filters.sort).map(([key, value]) =>
             value ? (
-              <div className={styles.page__filterContainer__filterBox} key={key} 
-              style={{
-                display: value ? 'flex' : 'none'
-              }}>
-                <div className={styles.page__filterContainer__filterBox__filterLabel}>
+              <div
+                className={styles.page__filterContainer__filterBox}
+                key={key}
+                style={{
+                  display: value ? 'flex' : 'none',
+                }}
+              >
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterLabel
+                  }
+                >
                   {key.charAt(0).toUpperCase() + key.slice(1)}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__filterResult}>
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterResult
+                  }
+                >
                   {typeof value === 'object'
                     ? Object.entries(value)
-                      .map(([subKey, subValue]) => `${subKey}: ${subValue}`)
-                      .join(', ')
+                        .map(([subKey, subValue]) => `${subKey}: ${subValue}`)
+                        .join(', ')
                     : value}
                 </div>
-                <div className={styles.page__filterContainer__filterBox__crossIcon} 
-                onClick={() => handleFilterClear('sort', key)}>
+                <div
+                  className={styles.page__filterContainer__filterBox__crossIcon}
+                  onClick={() => handleFilterClear('sort', key)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"
@@ -191,15 +276,26 @@ const SearchResults = () => {
               </div>
             ) : null
           )}
-          {filters.filters.price?.from && filters.filters.price?.to  && filters.filters.price?.from!='' && filters.filters.price?.to!='' ? (
+          {filters.filters.price?.from &&
+          filters.filters.price?.to &&
+          filters.filters.price?.from != '' &&
+          filters.filters.price?.to != '' ? (
             <div className={styles.page__filterContainer__filterBox}>
-              <div className={styles.page__filterContainer__filterBox__filterLabel}>
+              <div
+                className={styles.page__filterContainer__filterBox__filterLabel}
+              >
                 Price
               </div>
-              <div className={styles.page__filterContainer__filterBox__filterResult}>
+              <div
+                className={
+                  styles.page__filterContainer__filterBox__filterResult
+                }
+              >
                 {`${filters.filters.price.from} - ${filters.filters.price.to}`}
               </div>
-              <div className={styles.page__filterContainer__filterBox__crossIcon}>
+              <div
+                className={styles.page__filterContainer__filterBox__crossIcon}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="10"
@@ -216,18 +312,20 @@ const SearchResults = () => {
               </div>
             </div>
           ) : null}
-
         </div>
 
-
-
         {/* ResultCard Component */}
-        <ResultCard numberOfResults={3} onFiltersChange={handleFiltersChange} />
+        <ResultCard
+          page="none"
+          listings={listings}
+          numberOfResults={3}
+          onFiltersChange={handleFiltersChange}
+        />
       </div>
 
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default SearchResults;
+export default SearchResults

@@ -9,6 +9,7 @@ import styles from './PopularListings.module.scss'
 
 interface PopularListingsProps {
   listings: Promise<ListingDTO[]>
+  page: string
 }
 
 export default function PopularListings(props: PopularListingsProps) {
@@ -24,6 +25,7 @@ export default function PopularListings(props: PopularListingsProps) {
       <div className={styles.popularListings__listings}>
         {listings.map((l) => (
           <PopularListing
+            page="home"
             key={l.id}
             listing={l}
           />

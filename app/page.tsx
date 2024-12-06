@@ -4,7 +4,11 @@ import Footer from './components/footer/Footer'
 import { ListingDTO } from './models/dtos/ListingDTO'
 import React from 'react'
 import SearchContainer from './components/searchContainer/SearchContainer'
-import listingSampleImage from '../assets/apartment-sample.jpeg'
+import image1 from '../assets/search-results-card-img.jpeg'
+import image2 from '../assets/apartment-sample.jpeg'
+import image3 from '../assets/apartment.jpeg'
+import image4 from '../assets/bike.jpeg'
+import image5 from '../assets/room.jpeg'
 import styles from './page.module.scss'
 import PopularListings from './components/popularListings/PopularListings'
 import HowItWorks from './components/howItWorks/HowItWorks'
@@ -14,13 +18,21 @@ import PopularLocations from './components/popularLocations/PopularLocations'
 export default function Home() {
   const testListing: ListingDTO = {
     id: '1',
-    imageURL: listingSampleImage.src,
+    images: [
+      `${image1.src}`,
+      `${image2.src}`,
+      `${image3.src}`,
+      `${image4.src}`,
+      `${image5.src}`,
+    ],
     isFavorite: false,
     listingType: 'apartment',
     title: 'The Wave Studios',
     roomCount: 2,
     bathroomCount: 2,
     location: 'Canggu',
+    description:
+      'Our apartment features a sleek and modern design, with clean lines and upscale finishes that create a welcoming and elegant ambiance.',
     lowestOffer: {
       price: {
         currencyISO: 'USD',
@@ -44,7 +56,10 @@ export default function Home() {
     <div className={styles.homePage}>
       <div className={styles.homePage__container}>
         <SearchContainer searchForm={<BasicSearch />} />
-        <PopularListings listings={listings} />
+        <PopularListings
+          page="home"
+          listings={listings}
+        />
         <LookingFor />
         <HowItWorks />
         <PopularLocations />
