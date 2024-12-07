@@ -11,8 +11,8 @@ import image3 from '../../../../assets/apartment.jpeg'
 import image4 from '../../../../assets/bike.jpeg'
 import image5 from '../../../../assets/room.jpeg'
 import Pagination from '../../resultCard/pagination/pagination'
-import Heart from '@/app/icons/heart'
-import Arrow from '@/app/icons/arrow'
+import Heart from '@/app/icons/Heart'
+import Arrow from '@/app/icons/Arrow'
 
 interface PopularListingProps {
   listing: ListingDTO
@@ -73,18 +73,26 @@ export default function PopularListing(props: PopularListingProps) {
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
           />
-          <div className={styles.card__arrows}>
-            <div className={styles.card__arrows__arrowContainer}>
+          <div className={styles.popularListing__image__arrows}>
+            <div
+              className={styles.popularListing__image__arrows__arrowContainer}
+            >
               <div
-                className={styles.card__arrows__arrowContainer__arrowLeft}
+                className={
+                  styles.popularListing__image__arrows__arrowContainer__arrowLeft
+                }
                 onClick={handlePrevious}
               >
                 {Arrow()}
               </div>
             </div>
-            <div className={styles.card__arrows__arrowContainer}>
+            <div
+              className={styles.popularListing__image__arrows__arrowContainer}
+            >
               <div
-                className={styles.card__arrows__arrowContainer__arrowRight}
+                className={
+                  styles.popularListing__image__arrows__arrowContainer__arrowRight
+                }
                 onClick={handleNext}
               >
                 {Arrow()}

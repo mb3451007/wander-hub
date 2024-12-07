@@ -44,6 +44,7 @@
       position: absolute;
       left: 4%;
       top: 47%;
+      cursor: pointer;
       // transform: translate(50%, -50%);
 
       &__arrowContainer {
@@ -72,9 +73,13 @@
           transform: rotate(180deg);
         }
       }
-
+      @media (min-width: 801px) {
+        display: flex;
+        gap: 220px;
+      }
       @media (min-width: 1920px) {
         display: flex;
+        gap: 370px;
       }
     }
 
@@ -166,6 +171,7 @@
     position: absolute;
     left: 4%;
     top: 47%;
+    cursor: pointer;
     // transform: translate(50%, -50%);
 
     &__arrowContainer {
