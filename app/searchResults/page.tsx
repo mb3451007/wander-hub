@@ -197,7 +197,7 @@ const SearchResults = () => {
         />
 
         <FilterBox />
-        <SortAndFilter onChange={handleSortFields} clearField={handleFilterClear}/>
+        <SortAndFilter onChange={handleSortFields} />
 
         {/* Display Filters */}
         <div className={styles.page__filterContainer}>
@@ -333,7 +333,6 @@ const SearchResults = () => {
           page="none"
           listings={listings}
           numberOfResults={3}
-          onFiltersChange={handleFiltersChange}
         />
       </div>
 

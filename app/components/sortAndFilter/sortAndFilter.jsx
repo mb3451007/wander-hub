@@ -3,14 +3,10 @@ import SortFields from './sortFields/sortFields'
 import styles from './sortAndFilter.module.scss';
 
 
-export default function sortAndFilter({onChange, clearField}) {
+export default function sortAndFilter({onChange}) {
     const sortFieldsObj = (sortObj) => {
         onChange(sortObj)
     };
-
-    useEffect(() => {
-      console.log('clear fieldreceived', clearField)
-    }, [])
 
       
     
