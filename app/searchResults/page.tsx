@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Bike from '../icons/Bike'
 import BikeBasicSearch, {
   BikeSearchParameters,
@@ -24,6 +24,8 @@ import image4 from '../../assets/bike.jpeg'
 import image5 from '../../assets/room.jpeg'
 
 const SearchResults = () => {
+  const [clearSort, setClearSort] = useState('')
+  const [sortClicked, setSortClicked] = useState(false)
   const [filters, setFilters] = useState<any>({
     filters: {
       additionally: [],
@@ -67,7 +69,7 @@ const SearchResults = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const listings: Promise<ListingDTO[]> = Promise.resolve(
-    [1, 2, 3, 4, 5, 6].map((i) => {
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map((i) => {
       return {
         ...testListing,
         id: `${i}`,
@@ -109,8 +111,10 @@ const SearchResults = () => {
 
   const handleFilterClear = (filterType: string, filterKey: string) => {
     const updatedFilters = { ...filters }
+    console.log('key',filterKey)
+    console.log('key',filterType)
 
-    if (filterType === 'filters') {
+    if (filterType === 'filters') { console.log(filterKey)
       if (Array.isArray(updatedFilters.filters[filterKey])) {
         updatedFilters.filters[filterKey] = []
       } else {
@@ -119,8 +123,10 @@ const SearchResults = () => {
     } else if (filterType === 'sort') {
       setSortDel(true)
       if (filterKey === 'price') {
+        setClearSort(filterKey)
         updatedFilters.sort[filterKey] = { from: '', to: '' } // Reset price range specifically
       } else {
+        setClearSort(filterKey)
         updatedFilters.sort[filterKey] = '' // Clear other sort values
       }
     }
@@ -129,6 +135,14 @@ const SearchResults = () => {
 
     setFilters(updatedFilters)
   }
+
+  // useEffect(() => {
+  //   if (clearSort) {
+  //     // Perform any required actions here if needed
+  //     console.log(`clearSort updated: ${clearSort}`);
+  //     setTimeout(() => setClearSort(null), 0); // Reset clearSort after render
+  //   }
+  // }, [clearSort]);
 
   return (
     <div>
@@ -183,7 +197,7 @@ const SearchResults = () => {
         />
 
         <FilterBox />
-        <SortAndFilter onChange={handleSortFields} />
+        <SortAndFilter onChange={handleSortFields} clearField={handleFilterClear}/>
 
         {/* Display Filters */}
         <div className={styles.page__filterContainer}>
@@ -229,7 +243,7 @@ const SearchResults = () => {
             ) : null
           )}
           {Object.entries(filters.sort).map(([key, value]) =>
-            value ? (
+            value && key !== 'price' ? ( // Add a check for key !== 'price'
               <div
                 className={styles.page__filterContainer__filterBox}
                 key={key}
@@ -251,13 +265,13 @@ const SearchResults = () => {
                 >
                   {typeof value === 'object'
                     ? Object.entries(value)
-                        .map(([subKey, subValue]) => `${subKey}: ${subValue}`)
-                        .join(', ')
+                      .map(([subKey, subValue]) => `${subKey}: ${subValue}`)
+                      .join(', ')
                     : value}
                 </div>
                 <div
                   className={styles.page__filterContainer__filterBox__crossIcon}
-                  onClick={() => handleFilterClear('sort', key)}
+                  onClick={() => {handleFilterClear('sort', key);  setSortClicked((prev) => !prev);}}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -276,42 +290,42 @@ const SearchResults = () => {
               </div>
             ) : null
           )}
-          {filters.filters.price?.from &&
-          filters.filters.price?.to &&
-          filters.filters.price?.from != '' &&
-          filters.filters.price?.to != '' ? (
-            <div className={styles.page__filterContainer__filterBox}>
-              <div
-                className={styles.page__filterContainer__filterBox__filterLabel}
-              >
-                Price
-              </div>
-              <div
-                className={
-                  styles.page__filterContainer__filterBox__filterResult
-                }
-              >
-                {`${filters.filters.price.from} - ${filters.filters.price.to}`}
-              </div>
-              <div
-                className={styles.page__filterContainer__filterBox__crossIcon}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
+
+          {
+            filters.sort.price?.from != '' &&
+              filters.sort.price?.to != '' ? (
+              <div className={styles.page__filterContainer__filterBox}>
+                <div
+                  className={styles.page__filterContainer__filterBox__filterLabel}
                 >
-                  <path
-                    d="M9.37456 1.11788C9.17931 0.922619 8.86271 0.922619 8.66746 1.11788L5.02026 4.76508L1.37309 1.11788C1.17783 0.922619 0.86124 0.922619 0.66598 1.11788C0.470715 1.31314 0.470715 1.62973 0.66598 1.82499L4.31316 5.47218L0.66599 9.11933C0.470725 9.31463 0.470725 9.63118 0.66599 9.82648C0.86125 10.0217 1.17784 10.0217 1.3731 9.82648L5.02026 6.17928L8.66746 9.82648C8.86271 10.0217 9.17931 10.0217 9.37456 9.82648C9.56981 9.63118 9.56981 9.31463 9.37456 9.11938L5.72736 5.47218L9.37456 1.82499C9.56981 1.62973 9.56981 1.31314 9.37456 1.11788Z"
-                    fill="black"
-                    fillOpacity="0.3"
-                  />
-                </svg>
+                  Price
+                </div>
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterResult
+                  }
+                >
+                  {`₱${filters.sort.price.from} - ₱${filters.sort.price.to}`}
+                </div>
+                <div
+                  className={styles.page__filterContainer__filterBox__crossIcon}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.37456 1.11788C9.17931 0.922619 8.86271 0.922619 8.66746 1.11788L5.02026 4.76508L1.37309 1.11788C1.17783 0.922619 0.86124 0.922619 0.66598 1.11788C0.470715 1.31314 0.470715 1.62973 0.66598 1.82499L4.31316 5.47218L0.66599 9.11933C0.470725 9.31463 0.470725 9.63118 0.66599 9.82648C0.86125 10.0217 1.17784 10.0217 1.3731 9.82648L5.02026 6.17928L8.66746 9.82648C8.86271 10.0217 9.17931 10.0217 9.37456 9.82648C9.56981 9.63118 9.56981 9.31463 9.37456 9.11938L5.72736 5.47218L9.37456 1.82499C9.56981 1.62973 9.56981 1.31314 9.37456 1.11788Z"
+                      fill="black"
+                      fillOpacity="0.3"
+                    />
+                  </svg>
+                </div>
               </div>
-            </div>
-          ) : null}
+            ) : null}
         </div>
 
         {/* ResultCard Component */}

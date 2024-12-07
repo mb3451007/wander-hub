@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SortFields from './sortFields/sortFields'
 import styles from './sortAndFilter.module.scss';
 
 
-export default function sortAndFilter({onChange}) {
+export default function sortAndFilter({onChange, clearField}) {
     const sortFieldsObj = (sortObj) => {
         onChange(sortObj)
     };
+
+    useEffect(() => {
+      console.log('clear fieldreceived', clearField)
+    }, [])
+
+      
+    
 
     return (
         <div className={styles.parentCont}>

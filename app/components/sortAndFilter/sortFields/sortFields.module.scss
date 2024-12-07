@@ -97,7 +97,7 @@
 
             &__arrowIcon {
                 position: absolute;
-                top: 51.25rem;
+                top: 29.25rem;
                 right: 4.5rem;
                 transform: translateY(-50%);
                 pointer-events: none;
@@ -108,6 +108,14 @@
                 align-items: center;
                 flex-shrink: 0;
                 color: black;
+
+                @media (min-width: 1200px){
+                    right: 5.5rem;
+                }
+
+                @media (min-width: 1920px){
+                    right: 9.5rem;
+                }
             }
         }
 
@@ -127,11 +135,11 @@
             }
         }
 
-        &__stay {
+        &__stay { 
             &__arrowIcon {
                 position: absolute;
-                top: 55.25rem;
-                right: 25.5rem;
+                top: 33.15rem;
+                right: 52%;
                 transform: translateY(-50%);
                 pointer-events: none;
                 display: flex;
@@ -141,14 +149,20 @@
                 align-items: center;
                 flex-shrink: 0;
                 color: black;
+
+
+                @media (min-width: 1920px){
+                    top: 29.15rem;
+                    right: 77.75%;
+                }
             }
         }
 
         &__location {
             &__arrowIcon {
                 position: absolute;
-                top: 55.25rem;
-                right: 4.5rem;
+                top: 33.15rem;
+                right: 9.25%;
                 transform: translateY(-50%);
                 pointer-events: none;
                 display: flex;
@@ -158,6 +172,49 @@
                 align-items: center;
                 flex-shrink: 0;
                 color: black;
+
+                @media (min-width: 800px){
+                    right: 8.25%;
+                }
+
+                @media (min-width: 950px){
+                    right: 7.25%;
+                }
+
+                @media (min-width: 1050px){
+                    right: 6.25%;
+                }
+
+                @media (min-width: 1150px){
+                    right: 7%;
+                }
+
+
+                @media (min-width: 1350px){
+                    right: 6%;
+                }
+
+                @media (min-width: 1550px){
+                    right: 5.5%;
+                }
+
+                @media (min-width: 1750px){
+                    right: 5%;
+                }
+
+                @media (min-width: 1920px){
+                    top: 29.15rem;
+                    right: 61%;
+                }
+            }
+
+            @media (min-width: 1000px){
+                right: 7.25%;
+                margin-left: 2rem;
+            }
+
+            @media (min-width: 1014px){
+                margin-left: 7.75%;
             }
         }
 
@@ -170,8 +227,14 @@
                 height: 24px;
                 flex-shrink: 0;
                 position: absolute;
-                top: 58rem;
-                right: 25.5rem;
+                top: 35.75rem;
+                right: 52%;
+
+                
+            @media (min-width: 1920px){
+                top: 28.5rem;
+                right: 48.75%;
+            }
             }
 
             ::placeholder {
@@ -195,8 +258,42 @@
                 height: 24px;
                 flex-shrink: 0;
                 position: absolute;
-                top: 58rem;
-                right: 4.5rem;
+                top: 35.75rem;
+                right: 9%;
+
+                @media (min-width: 800px){
+                    right: 8%;
+                }
+
+                @media (min-width: 950px){
+                    right: 7.5%;
+                }
+
+                @media (min-width: 1050px){
+                    right: 7%;
+                }
+
+                @media (min-width: 1150px){
+                    right: 6.5%;
+                }
+
+
+                // @media (min-width: 1350px){
+                //     right: 6.75%;
+                // }
+
+                @media (min-width: 1500px){
+                    right: 6%;
+                }
+
+                @media (min-width: 1750px){
+                    right: 5.75%;
+                }
+
+                @media (min-width: 1920px){
+                    top: 28.5rem;
+                    right: 36.5%;
+                }
             }
 
             ::placeholder {
