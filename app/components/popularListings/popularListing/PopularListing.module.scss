@@ -72,7 +72,10 @@
           transform: rotate(180deg);
         }
       }
-
+      @media (min-width: 801px) {
+        display: flex;
+        gap: 220px;
+      }
       @media (min-width: 1920px) {
         display: flex;
       }

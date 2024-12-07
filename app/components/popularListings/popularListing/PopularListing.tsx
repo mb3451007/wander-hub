@@ -73,18 +73,26 @@ export default function PopularListing(props: PopularListingProps) {
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
           />
-          <div className={styles.card__arrows}>
-            <div className={styles.card__arrows__arrowContainer}>
+          <div className={styles.popularListing__image__arrows}>
+            <div
+              className={styles.popularListing__image__arrows__arrowContainer}
+            >
               <div
-                className={styles.card__arrows__arrowContainer__arrowLeft}
+                className={
+                  styles.popularListing__image__arrows__arrowContainer__arrowLeft
+                }
                 onClick={handlePrevious}
               >
                 {Arrow()}
               </div>
             </div>
-            <div className={styles.card__arrows__arrowContainer}>
+            <div
+              className={styles.popularListing__image__arrows__arrowContainer}
+            >
               <div
-                className={styles.card__arrows__arrowContainer__arrowRight}
+                className={
+                  styles.popularListing__image__arrows__arrowContainer__arrowRight
+                }
                 onClick={handleNext}
               >
                 {Arrow()}
