@@ -11,8 +11,8 @@ import image3 from '../../../../assets/apartment.jpeg'
 import image4 from '../../../../assets/bike.jpeg'
 import image5 from '../../../../assets/room.jpeg'
 import Pagination from '../../resultCard/pagination/pagination'
-import Heart from '@/app/icons/heart'
-import Arrow from '@/app/icons/arrow'
+import Heart from '@/app/icons/Heart'
+import Arrow from '@/app/icons/Arrow'
 
 interface PopularListingProps {
   listing: ListingDTO
