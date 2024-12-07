@@ -32,6 +32,8 @@ export default function resultCard(props: ResultCardProps) {
   })
 
   const [listingsData, setListingsData] = useState<ListingDTO[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [listingsPerPage] = useState(10)
 
   // Fetch listings data from the Promise
   useEffect(() => {
@@ -77,6 +79,16 @@ export default function resultCard(props: ResultCardProps) {
     handleFiltersChange('additionally', newFilters)
   }
 
+  // Pagination logic
+  const indexOfLastListing = currentPage * listingsPerPage
+  const indexOfFirstListing = indexOfLastListing - listingsPerPage
+  const currentListings = listingsData.slice(indexOfFirstListing, indexOfLastListing)
+
+  const totalPages = Math.ceil(listingsData.length / listingsPerPage)
+
+  // Change page handler
+  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber)
+
   return (
     <div className={styles.background}>
       <p className={styles.background__resultsNumber}>
@@ -95,7 +107,7 @@ export default function resultCard(props: ResultCardProps) {
           </div>
         </div>
         <div className={styles.background__cards}>
-          {listingsData.map((l) => (
+          {currentListings.map((l) => (
             <PopularListing
               page="none"
               key={l.id}
@@ -104,8 +116,10 @@ export default function resultCard(props: ResultCardProps) {
           ))}
         </div>
       </div>
+      <CardsPagination  currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}/>
 
-      <CardsPagination />
     </div>
   )
 }

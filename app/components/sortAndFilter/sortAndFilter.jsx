@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SortFields from './sortFields/sortFields'
 import styles from './sortAndFilter.module.scss';
 
@@ -7,6 +7,9 @@ export default function sortAndFilter({onChange}) {
     const sortFieldsObj = (sortObj) => {
         onChange(sortObj)
     };
+
+      
+    
 
     return (
         <div className={styles.parentCont}>

@@ -4,20 +4,30 @@
     align-items: flex-end;
     gap: 28px;
     width: 100%;
-    margin: 6rem 0 0 0;
+    margin: 59rem 0 0 0;
 
     &__numbers{
         display: flex;
         align-items: center;
-        gap: 28px;
+        gap: 28px; 
 
-        &__number{
+        &__number,{
             color: var(--black-30, rgba(0, 0, 0, 0.30));
             font-size: 20px;
             font-style: normal;
             font-weight: 600;
             line-height: 26px; /* 130% */
             letter-spacing: 0.4px;
+            cursor: pointer;
+        }
+        &__activeNumber{
+            color: black;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 26px; /* 130% */
+            letter-spacing: 0.4px;
+            cursor: pointer;
         }
     }
 
@@ -25,6 +35,7 @@
         width: 24px;
         height: 24px;
         color: black;
+        cursor: pointer;
     }
 
     &__arrowRight{
@@ -32,9 +43,14 @@
         height: 24px;
         transform: rotate(180deg);
         color: black;
+        cursor: pointer;
     }
 
     @media (min-width: 768px) {
-        margin: 8rem 0;
+        margin: 17rem 0 5rem 0;
+    }
+
+    @media (min-width: 1920px) {
+        margin: 46rem 0 5rem 0;
     }
 }

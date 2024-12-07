@@ -2,6 +2,7 @@
   background: var(--light-grey, #f6f6f6);
   flex-shrink: 0;
   padding: 1.5rem 1rem 4rem 1rem;
+  height: fit-content;
 
   &__cardsAndFilter {
     @media (min-width: 1920px) {
