@@ -68,7 +68,10 @@ const SearchResults = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const listings: Promise<ListingDTO[]> = Promise.resolve(
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22].map((i) => {
+    [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+      22,
+    ].map((i) => {
       return {
         ...testListing,
         id: `${i}`,
@@ -110,10 +113,11 @@ const SearchResults = () => {
 
   const handleFilterClear = (filterType: string, filterKey: string) => {
     const updatedFilters = { ...filters }
-    console.log('key',filterKey)
-    console.log('key',filterType)
+    console.log('key', filterKey)
+    console.log('key', filterType)
 
-    if (filterType === 'filters') { console.log(filterKey)
+    if (filterType === 'filters') {
+      console.log(filterKey)
       if (Array.isArray(updatedFilters.filters[filterKey])) {
         updatedFilters.filters[filterKey] = []
       } else {
@@ -264,13 +268,16 @@ const SearchResults = () => {
                 >
                   {typeof value === 'object'
                     ? Object.entries(value)
-                      .map(([subKey, subValue]) => `${subKey}: ${subValue}`)
-                      .join(', ')
+                        .map(([subKey, subValue]) => `${subKey}: ${subValue}`)
+                        .join(', ')
                     : value}
                 </div>
                 <div
                   className={styles.page__filterContainer__filterBox__crossIcon}
-                  onClick={() => {handleFilterClear('sort', key);  setSortClicked((prev) => !prev);}}
+                  onClick={() => {
+                    handleFilterClear('sort', key)
+                    setSortClicked((prev) => !prev)
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -290,41 +297,39 @@ const SearchResults = () => {
             ) : null
           )}
 
-          {
-            filters.sort.price?.from != '' &&
-              filters.sort.price?.to != '' ? (
-              <div className={styles.page__filterContainer__filterBox}>
-                <div
-                  className={styles.page__filterContainer__filterBox__filterLabel}
-                >
-                  Price
-                </div>
-                <div
-                  className={
-                    styles.page__filterContainer__filterBox__filterResult
-                  }
-                >
-                  {`₱${filters.sort.price.from} - ₱${filters.sort.price.to}`}
-                </div>
-                <div
-                  className={styles.page__filterContainer__filterBox__crossIcon}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="none"
-                  >
-                    <path
-                      d="M9.37456 1.11788C9.17931 0.922619 8.86271 0.922619 8.66746 1.11788L5.02026 4.76508L1.37309 1.11788C1.17783 0.922619 0.86124 0.922619 0.66598 1.11788C0.470715 1.31314 0.470715 1.62973 0.66598 1.82499L4.31316 5.47218L0.66599 9.11933C0.470725 9.31463 0.470725 9.63118 0.66599 9.82648C0.86125 10.0217 1.17784 10.0217 1.3731 9.82648L5.02026 6.17928L8.66746 9.82648C8.86271 10.0217 9.17931 10.0217 9.37456 9.82648C9.56981 9.63118 9.56981 9.31463 9.37456 9.11938L5.72736 5.47218L9.37456 1.82499C9.56981 1.62973 9.56981 1.31314 9.37456 1.11788Z"
-                      fill="black"
-                      fillOpacity="0.3"
-                    />
-                  </svg>
-                </div>
+          {filters.sort.price?.from != '' && filters.sort.price?.to != '' ? (
+            <div className={styles.page__filterContainer__filterBox}>
+              <div
+                className={styles.page__filterContainer__filterBox__filterLabel}
+              >
+                Price
               </div>
-            ) : null}
+              <div
+                className={
+                  styles.page__filterContainer__filterBox__filterResult
+                }
+              >
+                {`₱${filters.sort.price.from} - ₱${filters.sort.price.to}`}
+              </div>
+              <div
+                className={styles.page__filterContainer__filterBox__crossIcon}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                >
+                  <path
+                    d="M9.37456 1.11788C9.17931 0.922619 8.86271 0.922619 8.66746 1.11788L5.02026 4.76508L1.37309 1.11788C1.17783 0.922619 0.86124 0.922619 0.66598 1.11788C0.470715 1.31314 0.470715 1.62973 0.66598 1.82499L4.31316 5.47218L0.66599 9.11933C0.470725 9.31463 0.470725 9.63118 0.66599 9.82648C0.86125 10.0217 1.17784 10.0217 1.3731 9.82648L5.02026 6.17928L8.66746 9.82648C8.86271 10.0217 9.17931 10.0217 9.37456 9.82648C9.56981 9.63118 9.56981 9.31463 9.37456 9.11938L5.72736 5.47218L9.37456 1.82499C9.56981 1.62973 9.56981 1.31314 9.37456 1.11788Z"
+                    fill="black"
+                    fillOpacity="0.3"
+                  />
+                </svg>
+              </div>
+            </div>
+          ) : null}
         </div>
 
         {/* ResultCard Component */}
@@ -332,6 +337,9 @@ const SearchResults = () => {
           page="none"
           listings={listings}
           numberOfResults={3}
+          onFiltersChange={(updatedFilters) =>
+            handleFiltersChange(updatedFilters)
+          }
         />
       </div>
 
