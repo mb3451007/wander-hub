@@ -19,7 +19,6 @@ export default function Home() {
   const testListing: ListingDTO = {
     id: '1',
     images: [
-      `${image1.src}`,
       `${image2.src}`,
       `${image3.src}`,
       `${image4.src}`,

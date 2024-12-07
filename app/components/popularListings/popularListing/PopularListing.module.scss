@@ -37,6 +37,22 @@
     width: 390px;
     height: 358px;
     position: relative;
+
+    &__inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 0.5s ease-in-out;
+      opacity: 0;
+    }
+
+    &__inner.active {
+      opacity: 1;
+    }
     &__arrows {
       display: none;
       align-items: center;
@@ -162,6 +178,21 @@
       height: 100%;
       border-radius: 0.75rem;
     }
+  }
+  &__inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+  }
+
+  &__inner.active {
+    opacity: 1;
   }
 
   &__arrows {
