@@ -5,12 +5,11 @@
 
     &__filterContainer{
         display: none;
-        width: 1138px;
         align-items: center;
         align-content: center;
         gap: 20px 28px;
         flex-wrap: wrap;
-        margin: 0 9rem;
+        // margin: 0 9rem;
 
         &__filterBox{
             display: flex;
@@ -46,9 +45,31 @@
             }
         }
 
-        @media (min-width:1920px){
+        @media (min-width:801px){
             display: flex;
         }
+
+        @media (min-width: 801px) and (max-width:901px) {
+            padding: 1rem 1rem 1rem 1.25rem;
+          }
+        
+          @media (min-width: 901px) and (max-width:1001px) {
+            padding: 1rem 4rem 1rem 4.25rem;
+          }
+        
+          
+    
+          @media (min-width: 1001px) {
+            padding: 1rem 6rem 1rem 6.25rem;
+          }
+        
+          @media (min-width: 1101px) {
+            padding: 1rem 8rem 1rem 8.25rem;
+          }
+        
+          @media (min-width: 1220px) {
+            padding: 1rem 9rem 1rem 9.25rem;
+          }
     }
 
     &__homeBreadcrumb{
@@ -98,5 +119,25 @@
         @media (min-width: 1920px) {
             margin: 3rem 4rem 0 9rem;
         }
+
+        @media (min-width: 801px) and (max-width:901px) {
+            margin: 3rem 1rem 0rem 1rem;
+          }
+        
+          @media (min-width: 901px) and (max-width:1001px) {
+            margin: 3rem 4rem 0 4rem;
+          }
+        
+          @media (min-width: 1001px) {
+            margin: 3rem 6rem 0 6rem;
+          }
+        
+          @media (min-width: 1101px) {
+            margin: 3rem 8rem 0 8rem;
+          }
+        
+          @media (min-width: 1220px) {
+            margin: 3rem 4rem 0 9rem;
+          }
     }
 }
