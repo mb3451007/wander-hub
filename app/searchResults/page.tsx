@@ -26,6 +26,10 @@ import image5 from '../../assets/room.jpeg'
 const SearchResults = () => {
   const [clearSort, setClearSort] = useState('')
   const [sortClicked, setSortClicked] = useState(false)
+  const [clearedFilter, setClearedFilter] = useState<{
+    filterType: string
+    filterKey: string
+  } | null>(null)
   const [filters, setFilters] = useState<any>({
     filters: {
       additionally: [],
@@ -137,6 +141,8 @@ const SearchResults = () => {
     console.log('updatedFilters after delete', updatedFilters)
 
     setFilters(updatedFilters)
+
+    setClearedFilter({ filterType, filterKey })
   }
 
   // useEffect(() => {
@@ -200,7 +206,10 @@ const SearchResults = () => {
         />
 
         <FilterBox />
-        <SortAndFilter onChange={handleSortFields} />
+        <SortAndFilter
+          clearedFilter={clearedFilter}
+          onChange={handleSortFields}
+        />
 
         {/* Display Filters */}
         <div className={styles.page__filterContainer}>
@@ -313,6 +322,10 @@ const SearchResults = () => {
               </div>
               <div
                 className={styles.page__filterContainer__filterBox__crossIcon}
+                onClick={() => {
+                  handleFilterClear('sort', 'price')
+                  setSortClicked((prev) => !prev)
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -340,6 +353,7 @@ const SearchResults = () => {
           onFiltersChange={(updatedFilters) =>
             handleFiltersChange(updatedFilters)
           }
+          clearedFilter={clearedFilter}
         />
       </div>
 

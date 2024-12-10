@@ -18,6 +18,7 @@ interface ResultCardProps {
   onFiltersChange: (filters: any) => void
   listings: Promise<ListingDTO[]>
   page: string
+  clearedFilter: { filterType: string; filterKey: string } | null
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,6 +36,27 @@ export default function resultCard(props: ResultCardProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [listingsPerPage] = useState(10)
 
+  useEffect(() => {
+    if (props.clearedFilter) {
+      console.log('Filter cleared:--------', props.clearedFilter)
+
+      // Handle cleared filter logic here
+      clearFilter(props.clearedFilter.filterKey)
+    }
+  }, [props.clearedFilter])
+  const [clearedFilters, setClearedFilters] = useState({
+    bedroom: false,
+    bathroom: false,
+    additionally: false,
+    amenities: false,
+  })
+
+  const clearFilter = (filterType: any) => {
+    setClearedFilters((prev: any) => ({
+      ...prev,
+      [filterType]: !prev[filterType], // Toggle the filterType to trigger useEffect
+    }))
+  }
   // Fetch listings data from the Promise
   useEffect(() => {
     void props.listings.then(setListingsData)
@@ -61,28 +83,43 @@ export default function resultCard(props: ResultCardProps) {
   // Handle changes for each specific filter
   const bedroomFilters = (newFilters: any) => {
     // console.log('Bedroom filters:', newFilters);
+    if (clearedFilters.bedroom) {
+      clearFilter('bedroom')
+    }
     handleFiltersChange('bedroom', newFilters)
   }
 
   const bathroomFilters = (newFilters: any) => {
     // console.log('Bathroom filters:', newFilters);
+    if (clearedFilters.bathroom) {
+      clearFilter('bathroom')
+    }
     handleFiltersChange('bathroom', newFilters)
   }
 
   const AmenitiesFilters = (newFilters: any) => {
     // console.log('Amenities filters:', newFilters);
+    if (clearedFilters.amenities) {
+      clearFilter('amenities')
+    }
     handleFiltersChange('amenities', newFilters)
   }
 
   const additionallyFilters = (newFilters: any) => {
     // console.log('Additionally filters:', newFilters);
+    if (clearedFilters.additionally) {
+      clearFilter('additionally')
+    }
     handleFiltersChange('additionally', newFilters)
   }
 
   // Pagination logic
   const indexOfLastListing = currentPage * listingsPerPage
   const indexOfFirstListing = indexOfLastListing - listingsPerPage
-  const currentListings = listingsData.slice(indexOfFirstListing, indexOfLastListing)
+  const currentListings = listingsData.slice(
+    indexOfFirstListing,
+    indexOfLastListing
+  )
 
   const totalPages = Math.ceil(listingsData.length / listingsPerPage)
 
@@ -97,13 +134,25 @@ export default function resultCard(props: ResultCardProps) {
       <div className={styles.background__cardsAndFilter}>
         <div className={styles.background__filterContainer}>
           <div className={styles.background__filterContainer__filter}>
-            <BedroomFilters onChange={bedroomFilters} />
+            <BedroomFilters
+              handleFilterClear={clearedFilters.bedroom}
+              onChange={bedroomFilters}
+            />
 
-            <BathroomFilters onChange={bathroomFilters} />
+            <BathroomFilters
+              handleFilterClear={clearedFilters.bathroom}
+              onChange={bathroomFilters}
+            />
 
-            <Amenities onChange={AmenitiesFilters} />
+            <Amenities
+              handleFilterClear={clearedFilters.amenities}
+              onChange={AmenitiesFilters}
+            />
 
-            <Additionally onChange={additionallyFilters} />
+            <Additionally
+              handleFilterClear={clearedFilters.additionally}
+              onChange={additionallyFilters}
+            />
           </div>
         </div>
         <div className={styles.background__cards}>
@@ -116,10 +165,11 @@ export default function resultCard(props: ResultCardProps) {
           ))}
         </div>
       </div>
-      <CardsPagination  currentPage={currentPage}
+      <CardsPagination
+        currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={handlePageChange}/>
-
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }

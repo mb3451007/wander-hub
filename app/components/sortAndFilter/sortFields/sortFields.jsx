@@ -1,13 +1,31 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './sortFields.module.scss'
 
-export default function sortFields({onChange}) {
-  const [date, setDate] = useState("");
-  const [stay, setStay] = useState("");
-  const [location, setLocation] = useState("");
-  const [priceFrom, setPriceFrom] = useState("");
-  const [priceTo, setPriceTo] = useState("");
-
+export default function sortFields({ onChange, clearedFilter }) {
+  const [date, setDate] = useState('')
+  const [stay, setStay] = useState('')
+  const [location, setLocation] = useState('')
+  const [priceFrom, setPriceFrom] = useState('')
+  const [priceTo, setPriceTo] = useState('')
+  useEffect(() => {
+    if (clearedFilter) {
+      console.log(
+        'Cleared Filterss   sort Fields-------------- :',
+        clearedFilter
+      )
+      if (clearedFilter.filterKey === 'stay') {
+        setStay('')
+      } else if (clearedFilter.filterKey === 'location') {
+        setLocation('')
+      } else if (clearedFilter.filterKey === 'price') {
+        setPriceFrom('')
+        setPriceTo('')
+      } else if (clearedFilter.filterKey === 'date') {
+        setDate('')
+      }
+      // Add your logic to clear fields in SortFields here
+    }
+  }, [clearedFilter])
   useEffect(() => {
     const sortObject = {
       stay,
@@ -17,16 +35,13 @@ export default function sortFields({onChange}) {
         from: priceFrom,
         to: priceTo,
       },
-    };
-
-    if(onChange){
-      onChange(sortObject);
     }
 
-    
-  }, [stay, location, date, priceFrom, priceTo, onChange]);
-  
-  
+    if (onChange) {
+      onChange(sortObject)
+    }
+  }, [stay, location, date, priceFrom, priceTo, onChange])
+
   return (
     <div className={styles.container}>
       <div className={styles.container__sortFields}>
@@ -59,7 +74,7 @@ export default function sortFields({onChange}) {
             name="date"
             id="date"
             className={styles.container__sortFields__date}
-            value={date} 
+            value={date}
             onChange={(event) => setDate(event.target.value)}
           >
             <option
@@ -93,7 +108,7 @@ export default function sortFields({onChange}) {
               name="stay"
               id="stay"
               className={styles.container__sortFields__stay}
-              value={stay} 
+              value={stay}
               onChange={(event) => setStay(event.target.value)}
             >
               <option
@@ -127,7 +142,7 @@ export default function sortFields({onChange}) {
               name="location"
               id="location"
               className={styles.container__sortFields__location}
-              value={location} 
+              value={location}
               onChange={(event) => setLocation(event.target.value)}
             >
               <option
@@ -162,7 +177,7 @@ export default function sortFields({onChange}) {
               id="priceFrom"
               className={styles.container__sortFields__priceFrom}
               placeholder="Price (From)"
-              value={priceFrom} 
+              value={priceFrom}
               onChange={(event) => setPriceFrom(event.target.value)}
             ></input>
             <div className={styles.container__sortFields__priceFrom__priceIcon}>
@@ -185,7 +200,7 @@ export default function sortFields({onChange}) {
               id="priceTo"
               className={styles.container__sortFields__priceTo}
               placeholder="Price (To)"
-              value={priceTo} 
+              value={priceTo}
               onChange={(event) => setPriceTo(event.target.value)}
             ></input>
             <div className={styles.container__sortFields__priceTo__priceIcon}>

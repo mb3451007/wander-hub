@@ -1,36 +1,47 @@
-import React, { useState } from "react";
-import styles from "./bathroomFilters.module.scss";
+import React, { useState, useEffect } from 'react'
+import styles from './bathroomFilters.module.scss'
 
 // eslint-disable-next-line react/prop-types
-export default function BathroomFilters({ onChange }) {
+export default function BathroomFilters({ onChange, handleFilterClear }) {
   // Filters data
   const filtersData = [
-    { key: "any", label: "Any" },
-    { key: "oneBathroom", label: "1 Bathroom" },
-    { key: "twoBathrooms", label: "2 Bathrooms" },
-    { key: "threeBathrooms", label: "3 Bathrooms" },
-    { key: "fourPlusBathrooms", label: "4 and more" },
-  ];
+    { key: 'any', label: 'Any' },
+    { key: 'oneBathroom', label: '1 Bathroom' },
+    { key: 'twoBathrooms', label: '2 Bathrooms' },
+    { key: 'threeBathrooms', label: '3 Bathrooms' },
+    { key: 'fourPlusBathrooms', label: '4 and more' },
+  ]
 
   // State to track which checkboxes are selected
-  const [selectedFilters, setSelectedFilters] = useState({});
+  const [selectedFilters, setSelectedFilters] = useState({})
+  const clearFilters = () => {
+    setSelectedFilters({})
+    if (onChange) {
+      onChange([])
+    }
+  }
 
+  useEffect(() => {
+    if (handleFilterClear) {
+      clearFilters()
+    }
+  }, [handleFilterClear])
   // Handle toggle function
   const handleToggle = (key) => {
     setSelectedFilters((prevState) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const newState = { ...prevState, [key]: !prevState[key] };
-        const selectedLabels = Object.entries(newState)
-      .filter(([key, value]) => value) 
-      .map(([key]) => filtersData.find((item) => item.key === key)?.label);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const newState = { ...prevState, [key]: !prevState[key] }
+      const selectedLabels = Object.entries(newState)
+        .filter(([key, value]) => value)
+        .map(([key]) => filtersData.find((item) => item.key === key)?.label)
 
       if (onChange) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        onChange(selectedLabels);
+        onChange(selectedLabels)
       }
-          return newState;
-    });
-  };
+      return newState
+    })
+  }
 
   return (
     <div className={styles.filterContainer}>
@@ -86,5 +97,5 @@ export default function BathroomFilters({ onChange }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
