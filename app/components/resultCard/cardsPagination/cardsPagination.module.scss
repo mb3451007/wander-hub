@@ -11,7 +11,7 @@
         align-items: center;
         gap: 28px; 
 
-        &__number,{
+        &__number{
             color: var(--black-30, rgba(0, 0, 0, 0.30));
             font-size: 20px;
             font-style: normal;
@@ -50,7 +50,7 @@
         margin: 17rem 0 5rem 0;
     }
 
-    @media (min-width: 1920px) {
+    @media (min-width: 801px) {
         margin: 46rem 0 5rem 0;
     }
 }

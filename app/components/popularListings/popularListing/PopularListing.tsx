@@ -146,15 +146,18 @@ export default function PopularListing(props: PopularListingProps) {
 
         <div className={styles.card__bgIMG}>
           {images.map((image, index) => (
-            <div
-              key={index}
-              className={`${styles.popularListing__image__inner} ${
-                index === activeIndex ? styles.active : ''
-              }`}
-              style={{
-                backgroundImage: `url(${image})`,
-              }}
-            ></div>
+            // <div  key={index} className={styles.popularListing__image}>
+
+              <div
+               key={index}
+                className={`${styles.popularListing__image__inner} ${
+                  index === activeIndex ? styles.active : ''
+                }`}
+                style={{
+                  backgroundImage: `url(${image})`,
+                }}
+              ></div>
+            // </div>
           ))}
           <div className={styles.card__heart}>
             <div className={styles.card__heart__icon}>{Heart()}</div>
