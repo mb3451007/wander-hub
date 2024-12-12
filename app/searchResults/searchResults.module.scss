@@ -1,143 +1,452 @@
-.page{
-    background: var(--white, #FFF);;
+.page {
+  background: var(--white, #fff);
+  color: black;
+
+  &__filterContainer {
+    display: none;
+    align-items: center;
+    align-content: center;
+    gap: 20px 28px;
+    flex-wrap: wrap;
+    // margin: 0 9rem;
+
+    &__filterBox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &__filterLabel {
+        color: #000;
+        font-family: Lato;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+
+      &__filterResult {
+        color: #000;
+        font-family: Lato;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      &__crossIcon {
+        display: flex;
+        width: 12px;
+        height: 12px;
+        padding: 1.518px 1.481px 1.481px 1.518px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
+
+    @media (min-width: 801px) {
+      display: flex;
+    }
+
+    @media (min-width: 801px) and (max-width: 901px) {
+      padding: 1rem 1rem 1rem 1.25rem;
+    }
+
+    @media (min-width: 901px) and (max-width: 1001px) {
+      padding: 1rem 4rem 1rem 4.25rem;
+    }
+
+    @media (min-width: 1001px) {
+      padding: 1rem 6rem 1rem 6.25rem;
+    }
+
+    @media (min-width: 1101px) {
+      padding: 1rem 8rem 1rem 8.25rem;
+    }
+
+    @media (min-width: 1220px) {
+      padding: 1rem 9rem 1rem 9.25rem;
+    }
+  }
+
+  &__homeBreadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 1.5rem 1rem 0 1rem;
+
+    &__homeLogo {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      padding: 2px;
+      justify-content: center;
+      align-items: center;
+      color: #000000;
+    }
+
+    &__home {
+      color: #000;
+      // font-family: Lato;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    &__resultsOptionsLogo {
+      width: 16px;
+      height: 16px;
+      color: #cbcbcb;
+    }
+
+    &__resultsOptions {
+      color: var(--light-gray, #cbcbcb);
+      // font-family: Lato;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    @media (min-width: 768px) {
+      margin: 3rem 4rem 0 4rem;
+    }
+
+    @media (min-width: 1920px) {
+      margin: 3rem 4rem 0 9rem;
+    }
+
+    @media (min-width: 801px) and (max-width: 901px) {
+      margin: 3rem 1rem 0rem 1rem;
+    }
+
+    @media (min-width: 901px) and (max-width: 1001px) {
+      margin: 3rem 4rem 0 4rem;
+    }
+
+    @media (min-width: 1001px) {
+      margin: 3rem 6rem 0 6rem;
+    }
+
+    @media (min-width: 1101px) {
+      margin: 3rem 8rem 0 8rem;
+    }
+
+    @media (min-width: 1220px) {
+      margin: 3rem 4rem 0 9rem;
+    }
+  }
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.apartmentModal {
+  background: white;
+  width: 100%;
+  height: 100vh;
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modalHeader {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: white;
+  height: 65px;
+  padding: 0rem 1rem;
+  border-bottom: 0.5px solid #8f8f8f4d;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
+
+  &__modalHeaderSubContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+    p {
+      color: black;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 22px;
+    }
+    &__closeIconContainer {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: #8f8f8f4d;
+      border-radius: 75%;
+      padding: 0.3rem;
+    }
+  }
+}
+
+.modalHeaderNonSticky {
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: white;
+  height: 65px;
+  padding: 0rem 1rem;
+
+  &__modalHeaderSubContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+    p {
+      color: black;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 22px;
+    }
+    &__closeIconContainer {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: #8f8f8f4d;
+      border-radius: 75%;
+      padding: 0.3rem;
+    }
+  }
+}
+
+.priceSectionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+
+  padding: 0rem 1rem;
+
+  &__innerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 0.9rem;
+    p {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    &__inputBoxContainer {
+      display: flex;
+      width: 156px;
+      background-color: white;
+      border-radius: 8px;
+      border: 1.5px solid rgba(143, 143, 143, 0.3);
+      color: black;
+      padding: 0rem 0.75rem;
+      height: 42px;
+
+      input {
+        width: 95%;
+        background-color: white;
+        border: none;
+        color: black;
+        height: 100%;
+      }
+      input:focus {
+        outline: none;
+      }
+      svg {
+        width: 24px;
+      }
+    }
+    &__verticalLine {
+      border: 1px solid rgba(143, 143, 143, 0.3);
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    &__selectablesContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 0.9rem;
+      gap: 10px;
+
+      &__selectAble {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(143, 143, 143, 0.3);
+        border-radius: 4px;
+        padding: 3px 12px;
+
+        p {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+.modalFooter {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  height: 65px;
+  padding: 0rem 1rem;
+  gap: 10px;
+
+  &__clearAll {
+    background-color: white;
+    text-decoration: underline;
+    border: none;
     color: black;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    width: 25%;
+  }
 
+  &__confirm {
+    background-color: black;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    width: 70%;
+    padding: 16px 20px;
+  }
+}
+.sortModal {
+  display: flex;
+  position: fixed;
+  z-index: 999;
+  bottom: 0;
+  width: 100%;
+  height: 60vh;
+  background-color: white;
+  flex-direction: column;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border-radius: 24px 24px 0px 0px;
+}
 
-    &__filterContainer{
-        display: none;
+.sortModalSubContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  padding: 0rem 1rem;
+
+  &__innerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0.9rem;
+
+    &__quarterVerticalLine {
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      width: 25px;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__closeButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0rem 1rem;
+
+    div {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      background-color: #8f8f8f4d;
+      border-radius: 75%;
+    }
+  }
+
+  &__headingContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0rem 1rem;
+
+    p {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 30px;
+      color: #000000;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0rem 0.5rem;
+    &__radioContainer {
+      margin: 0.8rem 0rem;
+      padding: 0rem 0.5rem;
+
+      label {
+        display: flex;
+        flex-direction: row;
         align-items: center;
-        align-content: center;
-        gap: 20px 28px;
-        flex-wrap: wrap;
-        // margin: 0 9rem;
+        width: 100%;
+        justify-content: space-between;
+        color: black;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 18px;
 
-        &__filterBox{
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            &__filterLabel{
-                color: #000;
-                font-family: Lato;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 600;
-                line-height: normal;
-            }
-
-            &__filterResult{
-                color: #000;
-                font-family: Lato;
-                font-size: 16px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-            }
-
-            &__crossIcon{
-                display: flex;
-                width: 12px;
-                height: 12px;
-                padding: 1.518px 1.481px 1.481px 1.518px;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
-            }
+        input {
+          color-scheme: light;
+          accent-color: black;
         }
-
-        @media (min-width:801px){
-            display: flex;
-        }
-
-        @media (min-width: 801px) and (max-width:901px) {
-            padding: 1rem 1rem 1rem 1.25rem;
-          }
-        
-          @media (min-width: 901px) and (max-width:1001px) {
-            padding: 1rem 4rem 1rem 4.25rem;
-          }
-        
-          
-    
-          @media (min-width: 1001px) {
-            padding: 1rem 6rem 1rem 6.25rem;
-          }
-        
-          @media (min-width: 1101px) {
-            padding: 1rem 8rem 1rem 8.25rem;
-          }
-        
-          @media (min-width: 1220px) {
-            padding: 1rem 9rem 1rem 9.25rem;
-          }
+      }
     }
 
-    &__homeBreadcrumb{
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin: 1.5rem 1rem 0 1rem;
-
-        &__homeLogo{
-            display: flex;
-            width: 24px;
-            height: 24px;
-            padding: 2px;
-            justify-content: center;
-            align-items: center;
-            color: #000000;
-        }
-
-        &__home{
-            color: #000;
-            // font-family: Lato;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-
-        &__resultsOptionsLogo{
-            width: 16px;
-            height: 16px;
-            color: #CBCBCB;
-        }
-
-        &__resultsOptions{
-            color: var(--light-gray, #CBCBCB);
-            // font-family: Lato;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-        }
-
-        @media (min-width: 768px) {
-            margin: 3rem 4rem 0 4rem;
-        }
-
-        @media (min-width: 1920px) {
-            margin: 3rem 4rem 0 9rem;
-        }
-
-        @media (min-width: 801px) and (max-width:901px) {
-            margin: 3rem 1rem 0rem 1rem;
-          }
-        
-          @media (min-width: 901px) and (max-width:1001px) {
-            margin: 3rem 4rem 0 4rem;
-          }
-        
-          @media (min-width: 1001px) {
-            margin: 3rem 6rem 0 6rem;
-          }
-        
-          @media (min-width: 1101px) {
-            margin: 3rem 8rem 0 8rem;
-          }
-        
-          @media (min-width: 1220px) {
-            margin: 3rem 4rem 0 9rem;
-          }
+    &__verticalLine {
+      border: 1px solid rgba(143, 143, 143, 0.3);
+      width: 100%;
+      margin-bottom: 0.5rem;
     }
+  }
 }

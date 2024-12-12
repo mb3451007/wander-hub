@@ -1,0 +1,201 @@
+.modal {
+  background: white;
+  width: 100%;
+  color: black;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.modalHeader {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: white;
+  height: 65px;
+  padding: 0rem 1rem;
+  border-bottom: 0.5px solid #8f8f8f4d;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);
+
+  &__modalHeaderSubContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    justify-content: space-between;
+    p {
+      color: black;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 22px;
+    }
+    &__closeIconContainer {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: #8f8f8f4d;
+      border-radius: 75%;
+      padding: 0.3rem;
+    }
+  }
+}
+
+.priceSectionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+
+  padding: 0rem 1rem;
+
+  &__innerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 0.9rem;
+    p {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    &__inputBoxContainer {
+      display: flex;
+      width: 156px;
+      background-color: white;
+      border-radius: 8px;
+      border: 1.5px solid rgba(143, 143, 143, 0.3);
+      color: black;
+      padding: 0rem 0.75rem;
+      height: 42px;
+
+      input {
+        width: 95%;
+        background-color: white;
+        border: none;
+        color: black;
+        height: 100%;
+      }
+      input:focus {
+        outline: none;
+      }
+      svg {
+        width: 24px;
+      }
+    }
+    &__verticalLine {
+      border: 1px solid rgba(143, 143, 143, 0.3);
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    &__selectablesContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-top: 0.9rem;
+      gap: 10px;
+
+      &__selectAble {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(143, 143, 143, 0.3);
+        border-radius: 4px;
+        padding: 3px 12px;
+        &__selected {
+          border: 2px solid black;
+        }
+        p {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+.modalFooter {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  height: 65px;
+  padding: 0rem 1rem;
+  gap: 10px;
+
+  &__clearAll {
+    background-color: white;
+    text-decoration: underline;
+    border: none;
+    color: black;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    width: 25%;
+  }
+
+  &__confirm {
+    background-color: black;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    width: 70%;
+    padding: 16px 20px;
+  }
+}
+
+.keypadContainer {
+  position: fixed;
+  bottom: 0;
+  height: 50vh;
+  width: 100%;
+  background-color: #d0d4dc;
+  z-index: 500;
+
+  &__buttonContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.4rem 0.2rem;
+    gap: 5px;
+
+    &__button {
+      width: 32%;
+      height: 42px;
+      background-color: white;
+      box-shadow: 0px 0.9px 0 rgba(0, 0, 0, 0.35);
+      color: black;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      border-radius: 5px;
+      font-weight: 400;
+      font-size: 22px;
+
+      span {
+        font-size: 10px;
+        font-weight: 700;
+      }
+    }
+  }
+}

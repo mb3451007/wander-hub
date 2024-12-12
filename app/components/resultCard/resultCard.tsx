@@ -76,7 +76,7 @@ export default function resultCard(props: ResultCardProps) {
   }
 
   useEffect(() => {
-    console.log('Updated filters:', filters)
+    console.log('Updated filters:desktop view', filters)
     props.onFiltersChange(filters)
   }, [filters])
 

@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import SortFields from './sortFields/sortFields'
 import styles from './sortAndFilter.module.scss'
 
-export default function sortAndFilter({ onChange, clearedFilter }) {
+export default function sortAndFilter({
+  onChange,
+  clearedFilter,
+  toggleModal,
+  toggleSortModal,
+  count,
+}) {
   const sortFieldsObj = (sortObj) => {
     onChange(sortObj)
   }
@@ -20,7 +26,10 @@ export default function sortAndFilter({ onChange, clearedFilter }) {
         onChange={sortFieldsObj}
       />
       <div className={styles.container}>
-        <div className={styles.container__sort}>
+        <div
+          className={styles.container__sort}
+          onClick={toggleSortModal}
+        >
           <div className={styles.container__sort__icon}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +44,10 @@ export default function sortAndFilter({ onChange, clearedFilter }) {
           </div>
           <div className={styles.container__sort__name}>Sort By</div>
         </div>
-        <div className={styles.container__filter}>
+        <div
+          className={styles.container__filter}
+          onClick={toggleModal}
+        >
           <div className={styles.container__filter__icon}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +61,13 @@ export default function sortAndFilter({ onChange, clearedFilter }) {
                 fill="black"
               />
             </svg>
+            {count > 0 && (
+              <div>
+                <p>{count}</p>
+              </div>
+            )}
           </div>
+
           <div className={styles.container__filter__name}>Filter</div>
         </div>
       </div>
