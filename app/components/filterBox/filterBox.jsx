@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './filterBox.module.scss'
 
-export default function filterBox({ toggleModal }) {
+export default function filterBox({ toggleModal, filters }) {
   const [isFieldOpen, setIsFieldOpen] = useState(false)
 
   useEffect(() => {
@@ -65,7 +65,10 @@ export default function filterBox({ toggleModal }) {
               Apartment, Canggu
             </div>
             <div className={styles.parentCont__container__desc__price}>
-              $500 - $1000
+              {filters.filters.price.from !== '' &&
+              filters.filters.price.to !== ''
+                ? `$ ${filters.filters.price.from} - $ ${filters.filters.price.to}`
+                : ''}
             </div>
           </div>
           <div className={styles.parentCont__container__icon}>
@@ -131,13 +134,20 @@ export default function filterBox({ toggleModal }) {
                 styles.openedParentContainer__container__fields__location
               }
             >
-              <div
+              <input
                 className={
                   styles.openedParentContainer__container__fields__location__tag
                 }
-              >
-                Location
-              </div>
+                style={{
+                  height: '100%',
+                  background: 'transparent',
+                  border: 'none',
+                  boxShadow: 'none',
+                  outline: 'none',
+                }}
+                placeholder="Location"
+              />
+
               <div
                 className={
                   styles.openedParentContainer__container__fields__location__icon

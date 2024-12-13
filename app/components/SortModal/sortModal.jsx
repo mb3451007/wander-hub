@@ -2,7 +2,32 @@ import React, { useState, useEffect } from 'react'
 import styles from './sortModal.module.scss'
 import Close from '@/app/icons/Close'
 
-export default function SortModal({ toggleModal, filters }) {
+export default function SortModal({
+  toggleModal,
+  filters: initialFilters,
+  onFiltersChange,
+}) {
+  const [filters, setFilters] = useState({
+    sortBy: initialFilters || '',
+  })
+
+  const handleFiltersChange = (filterKey, newFilters) => {
+    setFilters((prevState) => {
+      return {
+        ...prevState,
+        sortBy: newFilters,
+      }
+    })
+  }
+
+  const handleDateChange = (event) => {
+    const selectedValue = event.target.value
+    handleFiltersChange('sortBy', selectedValue)
+  }
+  useEffect(() => {
+    console.log('Updated filters:desktop view', filters)
+    onFiltersChange({ sortBy: filters.sortBy })
+  }, [filters])
   return (
     <div className={styles.sortModal}>
       <div className={styles.sortModalSubContainer__innerContainer}>
@@ -30,6 +55,8 @@ export default function SortModal({ toggleModal, filters }) {
               type="radio"
               name="sortOption"
               value="dateOldToNew"
+              checked={filters.sortBy === 'dateOldToNew'}
+              onChange={handleDateChange}
             />
           </label>
         </div>
@@ -43,6 +70,8 @@ export default function SortModal({ toggleModal, filters }) {
               type="radio"
               name="sortOption"
               value="dateNewToOld"
+              checked={filters.sortBy === 'dateNewToOld'}
+              onChange={handleDateChange}
             />
           </label>
         </div>
@@ -55,7 +84,9 @@ export default function SortModal({ toggleModal, filters }) {
             <input
               type="radio"
               name="sortOption"
-              value="priceHighest"
+              value="priceHighToLow"
+              checked={filters.sortBy === 'priceHighToLow'}
+              onChange={handleDateChange}
             />
           </label>
         </div>
@@ -68,7 +99,9 @@ export default function SortModal({ toggleModal, filters }) {
             <input
               type="radio"
               name="sortOption"
-              value="priceLowest"
+              value="priceLowToHigh"
+              checked={filters.sortBy === 'priceLowToHigh'}
+              onChange={handleDateChange}
             />
           </label>
         </div>

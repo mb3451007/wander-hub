@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from './filterModal.module.scss'
 import Close from '@/app/icons/Close'
 
@@ -50,7 +50,6 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
     { key: 'corporate', label: 'Corporate' },
     { key: 'petAllowed', label: 'Pet Allowed' },
   ]
-  const objets = ['Apartment', 'Villa', 'GuestHouse', 'Room', 'Hotel']
 
   const handleFiltersChange = (filterType, value) => {
     const updatedFilters = { ...filters }
@@ -58,20 +57,34 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
     onFiltersChange(updatedFilters)
   }
   const clearFilters = () => {
-    console.log('clearing filters')
-    onFiltersChange('clear') // Reset the filters in parent component
+    const clearedFilters = {
+      bedroom: [],
+      bathroom: [],
+      amenities: [],
+      additionally: [],
+      price: { from: '', to: '' },
+    }
+    setPriceFrom('')
+    setPriceTo('')
+    onFiltersChange({ filters: clearedFilters })
   }
 
   const [keypad, setKeypad] = useState(false)
   const [activeInput, setActiveInput] = useState(null)
-  const [priceFrom, setPriceFrom] = useState('')
-  const [priceTo, setPriceTo] = useState('')
+  const [priceFrom, setPriceFrom] = useState(filters.filters.price.from || '')
+  const [priceTo, setPriceTo] = useState(filters.filters.price.to || '')
+  const keypadRef = useRef(null)
+  const inputRef = useRef(null)
 
   const handleDigitClick = (digit) => {
     if (activeInput === 'from') {
-      setPriceFrom(priceFrom + digit)
+      const updatedPriceFrom = priceFrom + digit
+      setPriceFrom(updatedPriceFrom)
+      handleFiltersChange('price', { from: updatedPriceFrom, to: priceTo })
     } else if (activeInput === 'to') {
-      setPriceTo(priceTo + digit)
+      const updatedPriceTo = priceTo + digit
+      setPriceTo(updatedPriceTo)
+      handleFiltersChange('price', { from: priceFrom, to: updatedPriceTo })
     }
   }
 
@@ -85,7 +98,28 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
 
   const handleInputFocus = (inputType) => {
     setActiveInput(inputType)
+    setKeypad(true)
   }
+  useEffect(() => {
+    // Function to hide keypad when clicked outside
+    const handleClickOutside = (event) => {
+      if (
+        keypadRef.current &&
+        !keypadRef.current.contains(event.target) &&
+        !inputRef.current.contains(event.target)
+      ) {
+        setKeypad(false)
+      }
+    }
+
+    // Add event listener for clicks outside
+    document.addEventListener('mousedown', handleClickOutside)
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
@@ -116,6 +150,7 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
               className={
                 styles.priceSectionContainer__innerContainer__inputBoxContainer
               }
+              ref={inputRef}
             >
               <input
                 type="number"
@@ -130,6 +165,7 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
               className={
                 styles.priceSectionContainer__innerContainer__inputBoxContainer
               }
+              ref={inputRef}
             >
               <input
                 type="number"
@@ -333,7 +369,10 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
         </div>
       </div>
       {keypad && (
-        <div className={styles.keypadContainer}>
+        <div
+          className={styles.keypadContainer}
+          ref={keypadRef}
+        >
           <div className={styles.keypadContainer__buttonContainer}>
             {digits.map((digit) => {
               const [number, letters] = digit.label.split(' ')

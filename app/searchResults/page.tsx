@@ -175,7 +175,7 @@ const SearchResults = () => {
       console.log(filterKey)
       if (Array.isArray(updatedFilters.filters[filterKey])) {
         updatedFilters.filters[filterKey] = []
-      } else if (filterKey === 'sortBy') {
+      } else if (filterKey === 'sortBy' || filterKey === 'clearAll') {
         updatedFilters.sortBy = ''
       } else {
         delete updatedFilters.filters[filterKey]
@@ -200,16 +200,41 @@ const SearchResults = () => {
 
   //count total filters selected
   const calculateTotalSelected = () => {
-    // const filterValues = filters.filters
-    // let totalSelected = 0
+    const filterValues = filters.filters // Assuming this contains the data
+    let totalSelected = 0
 
-    // // Count the number of selected items in each filter
-    // for (let key in filterValues) {
-    //   totalSelected += filterValues[key].length
-    // }
+    const keysToCount = ['bathroom', 'bedroom', 'additionally', 'amenities']
 
-    // return totalSelected
-    return
+    keysToCount.forEach((key) => {
+      if (filterValues[key] && Array.isArray(filterValues[key])) {
+        totalSelected += filterValues[key].length
+      }
+    })
+
+    if (
+      filterValues.price &&
+      (filterValues.price.from !== '' || filterValues.price.to !== '')
+    ) {
+      totalSelected += 1
+    }
+
+    return totalSelected
+  }
+  const isAnyFilterFilled = () => {
+    const allFilters = filters.filters
+
+    // Check if any of the filter fields are not empty
+    return (
+      allFilters.additionally.length > 0 ||
+      allFilters.amenities.length > 0 ||
+      allFilters.bathroom.length > 0 ||
+      allFilters.bedroom.length > 0 ||
+      allFilters.location.length > 0 ||
+      allFilters.stay.length > 0 ||
+      allFilters.price.from !== '' ||
+      allFilters.price.to !== '' ||
+      filters.sortBy !== ''
+    )
   }
 
   // useEffect(() => {
@@ -277,7 +302,10 @@ const SearchResults = () => {
             ]}
           />
 
-          <FilterBox toggleModal={toggleApartmentsModal} />
+          <FilterBox
+            filters={filters}
+            toggleModal={toggleApartmentsModal}
+          />
           <SortAndFilter
             count={calculateTotalSelected()}
             toggleSortModal={toggleSortModal}
@@ -465,6 +493,39 @@ const SearchResults = () => {
                 </div>
               </div>
             ) : null}
+            {isAnyFilterFilled() && (
+              <div className={styles.page__filterContainer__filterBox}>
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterLabel
+                  }
+                >
+                  Clear All
+                </div>
+
+                <div
+                  className={styles.page__filterContainer__filterBox__crossIcon}
+                  onClick={() => {
+                    handleFilterClear('filters', 'clearAll')
+                    setSortClicked((prev) => !prev)
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.37456 1.11788C9.17931 0.922619 8.86271 0.922619 8.66746 1.11788L5.02026 4.76508L1.37309 1.11788C1.17783 0.922619 0.86124 0.922619 0.66598 1.11788C0.470715 1.31314 0.470715 1.62973 0.66598 1.82499L4.31316 5.47218L0.66599 9.11933C0.470725 9.31463 0.470725 9.63118 0.66599 9.82648C0.86125 10.0217 1.17784 10.0217 1.3731 9.82648L5.02026 6.17928L8.66746 9.82648C8.86271 10.0217 9.17931 10.0217 9.37456 9.82648C9.56981 9.63118 9.56981 9.31463 9.37456 9.11938L5.72736 5.47218L9.37456 1.82499C9.56981 1.62973 9.56981 1.31314 9.37456 1.11788Z"
+                      fill="black"
+                      fillOpacity="0.3"
+                    />
+                  </svg>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* ResultCard Component */}
@@ -494,13 +555,22 @@ const SearchResults = () => {
 
       {isSortModalOpen && (
         <SortModal
-          filters={filters}
+          filters={filters.sortBy}
           toggleModal={toggleSortModal}
+          onFiltersChange={(updatedFilters: any) =>
+            handleFiltersChange(updatedFilters)
+          }
         />
       )}
 
       {isApartmentModalOpen && (
-        <ApartmentModal toggleModal={toggleApartmentsModal} />
+        <ApartmentModal
+          filters={filters.filters.stay}
+          toggleModal={toggleApartmentsModal}
+          onFiltersChange={(updatedFilters: any) =>
+            handleFiltersChange(updatedFilters)
+          }
+        />
       )}
     </>
   )

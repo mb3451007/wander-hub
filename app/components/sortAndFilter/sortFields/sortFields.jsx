@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from './sortFields.module.scss'
 import Dropdown from '@/app/icons/Dropdown'
 
@@ -17,6 +17,7 @@ export default function sortFields({
   const [location, setLocation] = useState([])
   const [priceFrom, setPriceFrom] = useState('')
   const [priceTo, setPriceTo] = useState('')
+  const dropdownRef = useRef(null)
 
   const locations = [
     {
@@ -38,11 +39,22 @@ export default function sortFields({
   ]
   useEffect(() => {
     if (clearedFilter) {
-      console.log(
-        'Cleared Filterss   sort Fields-------------- :',
-        clearedFilter
-      )
-      if (clearedFilter.filterKey === 'stay') {
+      if (clearedFilter.filterKey === 'clearAll') {
+        // Clear all filters
+        setStay([])
+        setLocation([])
+        setPriceFrom('')
+        setPriceTo('')
+        setSortBy('')
+
+        setSelectedStay({})
+        setSelectedLocations({})
+        // Call your onChange functions to reset states
+        onStayChange([])
+        onLocationChange([])
+        onPriceChange({ from: '', to: '' })
+        onSortByChange('')
+      } else if (clearedFilter.filterKey === 'stay') {
         setStay([])
         onStayChange([])
         setSelectedStay({})
@@ -64,6 +76,24 @@ export default function sortFields({
       // Add your logic to clear fields in SortFields here
     }
   }, [clearedFilter])
+
+  useEffect(() => {
+    // Function to hide keypad when clicked outside
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setLocationDropdown(false)
+        setStayDropdown(false)
+      }
+    }
+
+    // Add event listener for clicks outside
+    document.addEventListener('mousedown', handleClickOutside)
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
   // useEffect(() => {
   //   const sortObject = {
   //     stay,
@@ -244,13 +274,17 @@ export default function sortFields({
           <div className="">
             <div
               className={styles.customDropDown}
-              onClick={() => setStayDropdown((prev) => !prev)}
+              onClick={() => setStayDropdown(true)}
+              ref={dropdownRef}
             >
               <p> Stay</p>
               {Dropdown(20)}
             </div>
             {stayDropdown && (
-              <ul className={styles.customList}>
+              <ul
+                className={styles.customList}
+                ref={dropdownRef}
+              >
                 {stays.map((stay) => {
                   return (
                     <li className={styles.customList__listItem}>
@@ -270,13 +304,17 @@ export default function sortFields({
           <div className="">
             <div
               className={styles.customDropDown}
-              onClick={() => setLocationDropdown((prev) => !prev)}
+              onClick={() => setLocationDropdown(true)}
+              ref={dropdownRef}
             >
               <p> Location</p>
               {Dropdown(20)}
             </div>
             {locationDropdown && (
-              <ul className={styles.customList}>
+              <ul
+                className={styles.customList}
+                ref={dropdownRef}
+              >
                 {locations.map((location) => {
                   return (
                     <li className={styles.customList__listItem}>

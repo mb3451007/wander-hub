@@ -52,6 +52,16 @@ export default function resultCard(props: ResultCardProps) {
   })
 
   const clearFilter = (filterType: any) => {
+    if (filterType === 'clearAll') {
+      setClearedFilters({
+        bedroom: true,
+        bathroom: true,
+        additionally: true,
+        amenities: true,
+      })
+
+      return
+    }
     setClearedFilters((prev: any) => ({
       ...prev,
       [filterType]: !prev[filterType], // Toggle the filterType to trigger useEffect
