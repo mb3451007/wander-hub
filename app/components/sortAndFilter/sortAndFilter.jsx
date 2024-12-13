@@ -9,21 +9,76 @@ export default function sortAndFilter({
   toggleSortModal,
   count,
 }) {
-  const sortFieldsObj = (sortObj) => {
-    onChange(sortObj)
+  const [filters, setFilters] = useState({
+    filters: {
+      location: [],
+      stay: [],
+      price: { from: '', to: '' },
+    },
+
+    sortBy: '',
+  })
+
+  const handleFiltersChange = (filterKey, newFilters) => {
+    setFilters((prevState) => {
+      if (filterKey === 'sortBy') {
+        return {
+          ...prevState,
+          sortBy: newFilters,
+        }
+      } else {
+        return {
+          filters: {
+            ...prevState.filters,
+            [filterKey]: newFilters,
+          },
+          sortBy: prevState.sortBy,
+        }
+      }
+    })
   }
+
+  useEffect(() => {
+    console.log('Updated filters:desktop view', filters)
+    onChange({ filters: filters.filters, sortBy: filters.sortBy })
+  }, [filters])
+
+  // useEffect(() => {
+  //   console.log('Updated filters:desktop view', filters)
+  //   onChange(filters)
+  // }, [filters])
+  // const sortFieldsObj = (sortObj) => {
+  //   onChange(sortObj)
+  // }
   useEffect(() => {
     if (clearedFilter) {
       console.log('Cleared Filterss-------------- :', clearedFilter)
-      // Add your logic to clear fields in SortFields here
     }
   }, [clearedFilter])
+  const locationsFilter = (newFilters) => {
+    handleFiltersChange('location', newFilters)
+  }
+  const stayFilters = (newFilters) => {
+    handleFiltersChange('stay', newFilters)
+  }
+
+  const priceChange = (newFilters) => {
+    handleFiltersChange('price', newFilters)
+  }
+
+  const sortByChange = (newFilters) => {
+    handleFiltersChange('sortBy', newFilters)
+  }
 
   return (
     <div className={styles.parentCont}>
       <SortFields
         clearedFilter={clearedFilter}
-        onChange={sortFieldsObj}
+        onChange={onChange}
+        onLocationChange={locationsFilter}
+        onStayChange={stayFilters}
+        onPriceChange={priceChange}
+        onSortByChange={sortByChange}
       />
       <div className={styles.container}>
         <div

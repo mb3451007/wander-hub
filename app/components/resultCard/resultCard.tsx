@@ -67,9 +67,9 @@ export default function resultCard(props: ResultCardProps) {
     setFilters((prevState) => {
       return {
         filters: {
-          ...prevState.filters, // Retain previous filter values
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          [filterKey]: newFilters, // Update the specific filter key
+          ...prevState.filters,
+
+          [filterKey]: newFilters,
         },
       }
     })

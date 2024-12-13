@@ -32,7 +32,7 @@ const SearchResults = () => {
   const [clearSort, setClearSort] = useState('')
   const [sortClicked, setSortClicked] = useState(false)
   const [isFilterModalOpen, setFilterIsModalOpen] = useState(false)
-  const [isApartmentModalOpen, setApartmentModalOpen] = useState(true)
+  const [isApartmentModalOpen, setApartmentModalOpen] = useState(false)
 
   const [isSortModalOpen, setSortModalOpen] = useState(false)
 
@@ -58,42 +58,46 @@ const SearchResults = () => {
       amenities: [],
       bathroom: [],
       bedroom: [],
+      location: [],
+      stay: [],
+      price: { from: '', to: '' },
     },
+    sortBy: '',
     sort: {
       date: '',
       location: '',
       price: { from: '', to: '' },
-      stay: '',
     },
   })
 
   const handleFiltersChange = (newFilters: any) => {
-    if (newFilters === 'clear') {
-      // Clear all filters by resetting to their default values
-      const resetFilters = {
-        filters: {
-          additionally: [],
-          amenities: [],
-          bathroom: [],
-          bedroom: [],
-        },
-        sort: {
-          date: '',
-          location: '',
-          price: { from: '', to: '' },
-          stay: '',
-        },
-      }
+    // if (newFilters === 'clear') {
+    //   // Clear all filters by resetting to their default values
+    //   const resetFilters = {
+    //     filters: {
+    //       additionally: [],
+    //       amenities: [],
+    //       bathroom: [],
+    //       bedroom: [],
+    //     },
+    //     sort: {
+    //       date: '',
+    //       location: '',
+    //       price: { from: '', to: '' },
+    //       stay: '',
+    //     },
+    //   }
 
-      setFilters(resetFilters)
-      return
-    }
+    //   setFilters(resetFilters)
+    //   return
+    // }
     const updatedFilters = {
       ...filters,
       filters: {
         ...filters.filters,
         ...newFilters.filters,
       },
+      sortBy: newFilters.sortBy || filters.sortBy,
       sort: {
         ...filters.sort,
         ...newFilters.sort,
@@ -102,6 +106,10 @@ const SearchResults = () => {
 
     setFilters(updatedFilters)
   }
+
+  useEffect(() => {
+    console.log(filters, '-------------new filters')
+  }, [filters])
 
   const testListing: ListingDTO = {
     id: '1',
@@ -167,6 +175,8 @@ const SearchResults = () => {
       console.log(filterKey)
       if (Array.isArray(updatedFilters.filters[filterKey])) {
         updatedFilters.filters[filterKey] = []
+      } else if (filterKey === 'sortBy') {
+        updatedFilters.sortBy = ''
       } else {
         delete updatedFilters.filters[filterKey]
       }
@@ -174,10 +184,10 @@ const SearchResults = () => {
       setSortDel(true)
       if (filterKey === 'price') {
         setClearSort(filterKey)
-        updatedFilters.sort[filterKey] = { from: '', to: '' } // Reset price range specifically
+        updatedFilters.sort[filterKey] = { from: '', to: '' }
       } else {
         setClearSort(filterKey)
-        updatedFilters.sort[filterKey] = '' // Clear other sort values
+        updatedFilters.sort[filterKey] = ''
       }
     }
 
@@ -190,15 +200,16 @@ const SearchResults = () => {
 
   //count total filters selected
   const calculateTotalSelected = () => {
-    const filterValues = filters.filters
-    let totalSelected = 0
+    // const filterValues = filters.filters
+    // let totalSelected = 0
 
-    // Count the number of selected items in each filter
-    for (let key in filterValues) {
-      totalSelected += filterValues[key].length
-    }
+    // // Count the number of selected items in each filter
+    // for (let key in filterValues) {
+    //   totalSelected += filterValues[key].length
+    // }
 
-    return totalSelected
+    // return totalSelected
+    return
   }
 
   // useEffect(() => {
@@ -272,7 +283,9 @@ const SearchResults = () => {
             toggleSortModal={toggleSortModal}
             toggleModal={toggleModal}
             clearedFilter={clearedFilter}
-            onChange={handleSortFields}
+            onChange={(updatedFilters: any) =>
+              handleFiltersChange(updatedFilters)
+            }
           />
 
           {/* Display Filters */}
@@ -320,7 +333,7 @@ const SearchResults = () => {
                 </div>
               ) : null
             )}
-            {Object.entries(filters.sort).map(([key, value]) =>
+            {/* {Object.entries(filters.sort).map(([key, value]) =>
               value && key !== 'price' ? ( // Add a check for key !== 'price'
                 <div
                   className={styles.page__filterContainer__filterBox}
@@ -372,9 +385,48 @@ const SearchResults = () => {
                   </div>
                 </div>
               ) : null
+            )} */}
+            {filters.sortBy !== '' && (
+              <div className={styles.page__filterContainer__filterBox}>
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterLabel
+                  }
+                >
+                  Sort By
+                </div>
+                <div
+                  className={
+                    styles.page__filterContainer__filterBox__filterResult
+                  }
+                >
+                  {filters.sortBy}
+                </div>
+                <div
+                  className={styles.page__filterContainer__filterBox__crossIcon}
+                  onClick={() => {
+                    handleFilterClear('filters', 'sortBy')
+                    setSortClicked((prev) => !prev)
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.37456 1.11788C9.17931 0.922619 8.86271 0.922619 8.66746 1.11788L5.02026 4.76508L1.37309 1.11788C1.17783 0.922619 0.86124 0.922619 0.66598 1.11788C0.470715 1.31314 0.470715 1.62973 0.66598 1.82499L4.31316 5.47218L0.66599 9.11933C0.470725 9.31463 0.470725 9.63118 0.66599 9.82648C0.86125 10.0217 1.17784 10.0217 1.3731 9.82648L5.02026 6.17928L8.66746 9.82648C8.86271 10.0217 9.17931 10.0217 9.37456 9.82648C9.56981 9.63118 9.56981 9.31463 9.37456 9.11938L5.72736 5.47218L9.37456 1.82499C9.56981 1.62973 9.56981 1.31314 9.37456 1.11788Z"
+                      fill="black"
+                      fillOpacity="0.3"
+                    />
+                  </svg>
+                </div>
+              </div>
             )}
 
-            {filters.sort.price?.from != '' && filters.sort.price?.to != '' ? (
+            {filters.filters.price?.from != '' && filters.price?.to != '' ? (
               <div className={styles.page__filterContainer__filterBox}>
                 <div
                   className={
@@ -388,12 +440,12 @@ const SearchResults = () => {
                     styles.page__filterContainer__filterBox__filterResult
                   }
                 >
-                  {`₱${filters.sort.price.from} - ₱${filters.sort.price.to}`}
+                  {`₱${filters.filters.price.from} - ₱${filters.filters.price.to}`}
                 </div>
                 <div
                   className={styles.page__filterContainer__filterBox__crossIcon}
                   onClick={() => {
-                    handleFilterClear('sort', 'price')
+                    handleFilterClear('filter', 'price')
                     setSortClicked((prev) => !prev)
                   }}
                 >

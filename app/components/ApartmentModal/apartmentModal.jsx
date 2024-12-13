@@ -43,7 +43,7 @@ export default function ApartmentModal({ toggleModal }) {
       </form>
 
       <div className={styles.confirmButtonContainer}>
-        <button>Done</button>
+        <button onClick={toggleModal}>Done</button>
       </div>
     </div>
   )
