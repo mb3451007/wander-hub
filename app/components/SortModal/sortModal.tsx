@@ -2,16 +2,21 @@ import React, { useState, useEffect } from 'react'
 import styles from './sortModal.module.scss'
 import Close from '@/app/icons/Close'
 
+interface sortModalProps {
+  filters: any
+  onFiltersChange: (filters: any) => void
+  toggleModal: () => void
+}
 export default function SortModal({
   toggleModal,
   filters: initialFilters,
   onFiltersChange,
-}) {
+}: sortModalProps) {
   const [filters, setFilters] = useState({
     sortBy: initialFilters || '',
   })
 
-  const handleFiltersChange = (filterKey, newFilters) => {
+  const handleFiltersChange = (filterKey: any, newFilters: any) => {
     setFilters((prevState) => {
       return {
         ...prevState,
@@ -20,7 +25,7 @@ export default function SortModal({
     })
   }
 
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: any) => {
     const selectedValue = event.target.value
     handleFiltersChange('sortBy', selectedValue)
   }

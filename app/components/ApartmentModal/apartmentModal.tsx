@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import styles from './apartmentModal.module.scss'
 import Close from '@/app/icons/Close'
-
+interface apartmentModalProps {
+  filters: any
+  onFiltersChange: (filters: any) => void
+  toggleModal: () => void
+}
 export default function ApartmentModal({
   toggleModal,
   onFiltersChange,
   filters: initialFilters,
-}) {
+}: apartmentModalProps) {
   const objets = ['Apartment', 'Villa', 'GuestHouse', 'Room', 'Hotel']
   const stays = [
     {
@@ -24,17 +28,19 @@ export default function ApartmentModal({
       stay: initialFilters,
     },
   })
-  const [selectedFilters, setSelectedFilters] = useState({})
-
+  // const [selectedFilters, setSelectedFilters] = useState({})
+  const [selectedFilters, setSelectedFilters] = useState<{
+    [key: string]: boolean
+  }>({})
   useEffect(() => {
-    const initialSelectedFilters = stays.reduce((acc, stay) => {
+    const initialSelectedFilters = stays.reduce((acc: any, stay: any) => {
       acc[stay.key] = initialFilters.includes(stay.label) || false
       return acc
     }, {})
 
     setSelectedFilters(initialSelectedFilters)
   }, [initialFilters])
-  const handleFiltersChange = (filterKey, newFilters) => {
+  const handleFiltersChange = (filterKey: any, newFilters: any) => {
     setFilters((prevState) => {
       return {
         filters: {
@@ -46,8 +52,8 @@ export default function ApartmentModal({
     })
   }
 
-  const handleToggle = (key) => {
-    setSelectedFilters((prevState) => {
+  const handleToggle = (key: any) => {
+    setSelectedFilters((prevState: any) => {
       const newState = { ...prevState, [key]: !prevState[key] }
       const selectedLabels = Object.entries(newState)
         .filter(([key, value]) => value)

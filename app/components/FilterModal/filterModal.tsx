@@ -4,7 +4,13 @@ import Close from '@/app/icons/Close'
 
 import Pound from '@/app/icons/Pound'
 import Backspace from '@/app/icons/Backspace'
-export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
+
+interface sortAndFilterProps {
+  filters: any
+  onFiltersChange: (filters: any) => void
+  toggleModal: () => void
+}
+export default function FilterModal(props: sortAndFilterProps) {
   const amenities = [
     { key: 'AirConditioning', label: 'Air Conditioning' },
     { key: 'AssistedLiving', label: 'Assisted Living' },
@@ -51,11 +57,97 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
     { key: 'petAllowed', label: 'Pet Allowed' },
   ]
 
-  const handleFiltersChange = (filterType, value) => {
-    const updatedFilters = { ...filters }
-    updatedFilters.filters[filterType] = value
-    onFiltersChange(updatedFilters)
+  const handleFiltersChange = (filterType: any, key: any) => {
+    const updatedFilters = { ...props.filters }
+    const currentFilterValues = updatedFilters.filters[filterType]
+
+    if (filterType === 'bedroom') {
+      if (key === 'any') {
+        if (currentFilterValues.includes('any')) {
+          updatedFilters.filters[filterType] = []
+          props.onFiltersChange(updatedFilters)
+          return
+        } else {
+          updatedFilters.filters[filterType] = [
+            'any',
+            'oneBedroom',
+            'twoBedrooms',
+            'threeBedrooms',
+            'fourPlusBedrooms',
+          ]
+          props.onFiltersChange(updatedFilters)
+          return
+        }
+      } else if (
+        currentFilterValues.includes(key) &&
+        key !== 'any' &&
+        currentFilterValues.includes('any')
+      ) {
+        let updatedFilterValues = currentFilterValues.includes(key)
+          ? currentFilterValues.filter((value: any) => value !== key)
+          : [...currentFilterValues, key]
+
+        updatedFilterValues = updatedFilterValues.filter(
+          (value: any) => value !== 'any'
+        )
+
+        updatedFilters.filters[filterType] = updatedFilterValues
+
+        props.onFiltersChange(updatedFilters)
+        return
+      }
+    }
+    if (filterType === 'bathroom') {
+      if (key === 'any') {
+        if (currentFilterValues.includes('any')) {
+          updatedFilters.filters[filterType] = []
+          props.onFiltersChange(updatedFilters)
+          return
+        } else {
+          updatedFilters.filters[filterType] = [
+            'any',
+            'oneBathroom',
+            'twoBathrooms',
+            'threeBathrooms',
+            'fourPlusBathrooms',
+          ]
+          props.onFiltersChange(updatedFilters)
+          return
+        }
+      } else if (
+        currentFilterValues.includes(key) &&
+        key !== 'any' &&
+        currentFilterValues.includes('any')
+      ) {
+        let updatedFilterValues = currentFilterValues.includes(key)
+          ? currentFilterValues.filter((value: any) => value !== key)
+          : [...currentFilterValues, key]
+
+        updatedFilterValues = updatedFilterValues.filter(
+          (value: any) => value !== 'any'
+        )
+
+        updatedFilters.filters[filterType] = updatedFilterValues
+
+        props.onFiltersChange(updatedFilters)
+        return
+      }
+    }
+
+    console.log(
+      currentFilterValues,
+      '---------current filter values',
+      'key:',
+      key
+    )
+    const updatedFilterValues = currentFilterValues.includes(key)
+      ? currentFilterValues.filter((value: any) => value !== key)
+      : [...currentFilterValues, key]
+
+    updatedFilters.filters[filterType] = updatedFilterValues
+    props.onFiltersChange(updatedFilters)
   }
+
   const clearFilters = () => {
     const clearedFilters = {
       bedroom: [],
@@ -66,17 +158,19 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
     }
     setPriceFrom('')
     setPriceTo('')
-    onFiltersChange({ filters: clearedFilters })
+    props.onFiltersChange({ filters: clearedFilters })
   }
 
   const [keypad, setKeypad] = useState(false)
   const [activeInput, setActiveInput] = useState(null)
-  const [priceFrom, setPriceFrom] = useState(filters.filters.price.from || '')
-  const [priceTo, setPriceTo] = useState(filters.filters.price.to || '')
-  const keypadRef = useRef(null)
-  const inputRef = useRef(null)
+  const [priceFrom, setPriceFrom] = useState(
+    props.filters.filters.price.from || ''
+  )
+  const [priceTo, setPriceTo] = useState(props.filters.filters.price.to || '')
+  const keypadRef = useRef<any>(null)
+  const inputRef = useRef<any>(null)
 
-  const handleDigitClick = (digit) => {
+  const handleDigitClick = (digit: any) => {
     if (activeInput === 'from') {
       const updatedPriceFrom = priceFrom + digit
       setPriceFrom(updatedPriceFrom)
@@ -96,17 +190,17 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
     }
   }
 
-  const handleInputFocus = (inputType) => {
+  const handleInputFocus = (inputType: any) => {
     setActiveInput(inputType)
     setKeypad(true)
   }
   useEffect(() => {
     // Function to hide keypad when clicked outside
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         keypadRef.current &&
-        !keypadRef.current.contains(event.target) &&
-        !inputRef.current.contains(event.target)
+        !keypadRef.current.contains(event.target as Node) &&
+        !inputRef.current.contains(event.target as Node)
       ) {
         setKeypad(false)
       }
@@ -131,7 +225,7 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
               className={
                 styles.modalHeader__modalHeaderSubContainer__closeIconContainer
               }
-              onClick={toggleModal}
+              onClick={props.toggleModal}
             >
               {Close()}
             </div>
@@ -200,20 +294,11 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
                 <div
                   key={bedroom.key}
                   className={`${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble} ${
-                    filters.filters.bedroom.includes(bedroom.key)
+                    props.filters.filters.bedroom.includes(bedroom.key)
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
-                  onClick={() =>
-                    handleFiltersChange(
-                      'bedroom',
-                      filters.filters.bedroom.includes(bedroom.key)
-                        ? filters.filters.bedroom.filter(
-                            (b) => b !== bedroom.key
-                          )
-                        : [...filters.filters.bedroom, bedroom.key]
-                    )
-                  }
+                  onClick={() => handleFiltersChange('bedroom', bedroom.key)}
                 >
                   <p>{bedroom.label}</p>
                 </div>
@@ -243,20 +328,11 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
                 <div
                   key={bathroom.key}
                   className={`${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble} ${
-                    filters.filters.bathroom.includes(bathroom.key)
+                    props.filters.filters.bathroom.includes(bathroom.key)
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
-                  onClick={() =>
-                    handleFiltersChange(
-                      'bathroom',
-                      filters.filters.bathroom.includes(bathroom.key)
-                        ? filters.filters.bathroom.filter(
-                            (b) => b !== bathroom.key
-                          )
-                        : [...filters.filters.bathroom, bathroom.key]
-                    )
-                  }
+                  onClick={() => handleFiltersChange('bathroom', bathroom.key)}
                 >
                   <p>{bathroom.label}</p>
                 </div>
@@ -286,19 +362,12 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
                 <div
                   key={amenity.key}
                   className={`${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble} ${
-                    filters.filters.amenities.includes(amenity.key)
+                    props.filters.filters.amenities.includes(amenity.key)
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
                   onClick={() =>
-                    handleFiltersChange(
-                      'amenities',
-                      filters.filters.amenities.includes(amenity.key)
-                        ? filters.filters.amenities.filter(
-                            (b) => b !== amenity.key
-                          )
-                        : [...filters.filters.amenities, amenity.key]
-                    )
+                    handleFiltersChange('amenities', amenities.keys)
                   }
                 >
                   <p>{amenity.label}</p>
@@ -329,19 +398,12 @@ export default function FilterModal({ toggleModal, onFiltersChange, filters }) {
                 <div
                   key={additional.key}
                   className={`${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble} ${
-                    filters.filters.additionally.includes(additional.key)
+                    props.filters.filters.additionally.includes(additional.key)
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
                   onClick={() =>
-                    handleFiltersChange(
-                      'additionally',
-                      filters.filters.additionally.includes(additional.key)
-                        ? filters.filters.additionally.filter(
-                            (b) => b !== additional.key
-                          )
-                        : [...filters.filters.additionally, additional.key]
-                    )
+                    handleFiltersChange('additionally', additional.key)
                   }
                 >
                   <p>{additional.label}</p>
