@@ -51,36 +51,21 @@ export default function BedroomFilters({
   //     return newState
   //   })
   // }
+
   const handleToggle = (key: string) => {
-    setSelectedFilters((prevState) => {
-      const newState = { ...prevState }
+    setSelectedFilters((prevState: any) => {
+      let newState: { [key: string]: boolean } = { ...prevState }
 
       if (key === 'any') {
-        if (!newState[key]) {
-          filtersData.forEach((filter) => {
-            newState[filter.key] = true
-          })
-        } else {
-          filtersData.forEach((filter) => {
-            newState[filter.key] = false
-          })
-        }
+        newState = { any: !prevState['any'] }
       } else {
-        newState[key] = !newState[key]
-
-        if (!newState[key]) {
-          newState['any'] = false
-        }
+        newState['any'] = false
+        newState[key] = !prevState[key]
       }
 
-      const allSelected = filtersData
-        .filter((filter) => filter.key !== 'any')
-        .every((filter) => newState[filter.key])
-
-      // Update the selected labels
       const selectedLabels = Object.entries(newState)
         .filter(([_, value]) => value)
-        .map(([key]) => filtersData.find((item) => item.key === key)?.label)
+        .map(([key]) => filtersData.find((item) => item.key === key)?.key)
 
       if (onChange) {
         onChange(selectedLabels)

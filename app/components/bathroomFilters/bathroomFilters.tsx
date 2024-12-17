@@ -51,40 +51,19 @@ export default function BathroomFilters({
   //   })
   // }
   const handleToggle = (key: string) => {
-    setSelectedFilters((prevState) => {
-      const newState = { ...prevState }
+    setSelectedFilters((prevState: any) => {
+      let newState: { [key: string]: boolean } = { ...prevState }
 
       if (key === 'any') {
-        // If "Any" is selected, select all filters
-        if (!newState[key]) {
-          filtersData.forEach((filter) => {
-            newState[filter.key] = true
-          })
-        } else {
-          // If "Any" is deselected, deselect all filters
-          filtersData.forEach((filter) => {
-            newState[filter.key] = false
-          })
-        }
+        newState = { any: !prevState['any'] }
       } else {
-        // If any other filter is selected/deselected
-        newState[key] = !newState[key]
-
-        // If any filter is deselected, deselect "Any"
-        if (!newState[key]) {
-          newState['any'] = false
-        }
+        newState['any'] = false
+        newState[key] = !prevState[key]
       }
 
-      // If all filters (excluding "Any") are selected, automatically select "Any"
-      const allSelected = filtersData
-        .filter((filter) => filter.key !== 'any')
-        .every((filter) => newState[filter.key])
-
-      // Update the selected labels
       const selectedLabels = Object.entries(newState)
         .filter(([_, value]) => value)
-        .map(([key]) => filtersData.find((item) => item.key === key)?.label)
+        .map(([key]) => filtersData.find((item) => item.key === key)?.key)
 
       if (onChange) {
         onChange(selectedLabels)

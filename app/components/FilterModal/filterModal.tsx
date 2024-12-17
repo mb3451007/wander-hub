@@ -57,95 +57,40 @@ export default function FilterModal(props: sortAndFilterProps) {
     { key: 'petAllowed', label: 'Pet Allowed' },
   ]
 
-  const handleFiltersChange = (filterType: any, key: any) => {
+  const handleFiltersChange = (filterType: any, value: any) => {
     const updatedFilters = { ...props.filters }
-    const currentFilterValues = updatedFilters.filters[filterType]
-
-    if (filterType === 'bedroom') {
-      if (key === 'any') {
-        if (currentFilterValues.includes('any')) {
-          updatedFilters.filters[filterType] = []
-          props.onFiltersChange(updatedFilters)
-          return
-        } else {
-          updatedFilters.filters[filterType] = [
-            'any',
-            'oneBedroom',
-            'twoBedrooms',
-            'threeBedrooms',
-            'fourPlusBedrooms',
-          ]
-          props.onFiltersChange(updatedFilters)
-          return
-        }
-      } else if (
-        currentFilterValues.includes(key) &&
-        key !== 'any' &&
-        currentFilterValues.includes('any')
-      ) {
-        let updatedFilterValues = currentFilterValues.includes(key)
-          ? currentFilterValues.filter((value: any) => value !== key)
-          : [...currentFilterValues, key]
-
-        updatedFilterValues = updatedFilterValues.filter(
-          (value: any) => value !== 'any'
-        )
-
-        updatedFilters.filters[filterType] = updatedFilterValues
-
-        props.onFiltersChange(updatedFilters)
-        return
-      }
-    }
-    if (filterType === 'bathroom') {
-      if (key === 'any') {
-        if (currentFilterValues.includes('any')) {
-          updatedFilters.filters[filterType] = []
-          props.onFiltersChange(updatedFilters)
-          return
-        } else {
-          updatedFilters.filters[filterType] = [
-            'any',
-            'oneBathroom',
-            'twoBathrooms',
-            'threeBathrooms',
-            'fourPlusBathrooms',
-          ]
-          props.onFiltersChange(updatedFilters)
-          return
-        }
-      } else if (
-        currentFilterValues.includes(key) &&
-        key !== 'any' &&
-        currentFilterValues.includes('any')
-      ) {
-        let updatedFilterValues = currentFilterValues.includes(key)
-          ? currentFilterValues.filter((value: any) => value !== key)
-          : [...currentFilterValues, key]
-
-        updatedFilterValues = updatedFilterValues.filter(
-          (value: any) => value !== 'any'
-        )
-
-        updatedFilters.filters[filterType] = updatedFilterValues
-
-        props.onFiltersChange(updatedFilters)
-        return
-      }
-    }
-
-    console.log(
-      currentFilterValues,
-      '---------current filter values',
-      'key:',
-      key
-    )
-    const updatedFilterValues = currentFilterValues.includes(key)
-      ? currentFilterValues.filter((value: any) => value !== key)
-      : [...currentFilterValues, key]
-
-    updatedFilters.filters[filterType] = updatedFilterValues
+    updatedFilters.filters[filterType] = value
     props.onFiltersChange(updatedFilters)
+  }
+
+  const toggleFilter = (filterType: string, key: string) => {
+    if (filterType === 'bedroom' || filterType === 'bathroom') {
+      const currentValues = props.filters.filters[filterType] || []
+
+      let updatedValues: string[]
+
+      if (key === 'any') {
+        updatedValues = ['any']
+      } else {
+        if (currentValues.includes('any')) {
+          updatedValues = [key]
+        } else {
+          updatedValues = currentValues.includes(key)
+            ? currentValues.filter((v: string) => v !== key)
+            : [...currentValues, key]
+        }
+      }
+
+      handleFiltersChange(filterType, updatedValues)
+      return
+    }
+
+    const currentValues = props.filters.filters[filterType] || []
+    const updatedValues = currentValues.includes(key)
+      ? currentValues.filter((v: string) => v !== key)
+      : [...currentValues, key]
+
+    handleFiltersChange(filterType, updatedValues)
   }
 
   const clearFilters = () => {
@@ -298,7 +243,7 @@ export default function FilterModal(props: sortAndFilterProps) {
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
-                  onClick={() => handleFiltersChange('bedroom', bedroom.key)}
+                  onClick={() => toggleFilter('bedroom', bedroom.key)}
                 >
                   <p>{bedroom.label}</p>
                 </div>
@@ -332,7 +277,7 @@ export default function FilterModal(props: sortAndFilterProps) {
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
-                  onClick={() => handleFiltersChange('bathroom', bathroom.key)}
+                  onClick={() => toggleFilter('bathroom', bathroom.key)}
                 >
                   <p>{bathroom.label}</p>
                 </div>
@@ -366,9 +311,7 @@ export default function FilterModal(props: sortAndFilterProps) {
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
-                  onClick={() =>
-                    handleFiltersChange('amenities', amenities.keys)
-                  }
+                  onClick={() => toggleFilter('amenities', amenity.key)}
                 >
                   <p>{amenity.label}</p>
                 </div>
@@ -402,9 +345,7 @@ export default function FilterModal(props: sortAndFilterProps) {
                       ? `${styles.priceSectionContainer__innerContainer__selectablesContainer__selectAble__selected}`
                       : ''
                   }`}
-                  onClick={() =>
-                    handleFiltersChange('additionally', additional.key)
-                  }
+                  onClick={() => toggleFilter('additionally', additional.key)}
                 >
                   <p>{additional.label}</p>
                 </div>

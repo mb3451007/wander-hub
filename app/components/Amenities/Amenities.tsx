@@ -44,7 +44,7 @@ export default function Amenities({
       const newState = { ...prevState, [key]: !prevState[key] }
       const selectedLabels = Object.entries(newState)
         .filter(([key, value]) => value)
-        .map(([key]) => amenities.find((item) => item.key === key)?.label)
+        .map(([key]) => amenities.find((item) => item.key === key)?.key)
 
       if (onChange) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call

@@ -57,7 +57,7 @@ export default function ApartmentModal({
       const newState = { ...prevState, [key]: !prevState[key] }
       const selectedLabels = Object.entries(newState)
         .filter(([key, value]) => value)
-        .map(([key]) => stays.find((item) => item.key === key)?.label)
+        .map(([key]) => stays.find((item) => item.key === key)?.key)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       handleFiltersChange('stay', selectedLabels)
