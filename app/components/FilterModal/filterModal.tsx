@@ -368,7 +368,12 @@ export default function FilterModal(props: sortAndFilterProps) {
           >
             Clear All
           </button>
-          <button className={styles.modalFooter__confirm}>Show Results</button>
+          <button
+            className={styles.modalFooter__confirm}
+            onClick={props.toggleModal}
+          >
+            Show Results
+          </button>
         </div>
       </div>
       {keypad && (

@@ -565,7 +565,7 @@ const SearchResults = () => {
 
       {isApartmentModalOpen && (
         <ApartmentModal
-          filters={filters.filters.stay}
+          initialFilters={filters.filters.stay}
           toggleModal={toggleApartmentsModal}
           onFiltersChange={(updatedFilters: any) =>
             handleFiltersChange(updatedFilters)

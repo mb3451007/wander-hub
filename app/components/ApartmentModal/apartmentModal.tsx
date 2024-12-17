@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import styles from './apartmentModal.module.scss'
 import Close from '@/app/icons/Close'
 interface apartmentModalProps {
-  filters: any
+  initialFilters: any
   onFiltersChange: (filters: any) => void
   toggleModal: () => void
 }
 export default function ApartmentModal({
   toggleModal,
   onFiltersChange,
-  filters: initialFilters,
+  initialFilters,
 }: apartmentModalProps) {
   const objets = ['Apartment', 'Villa', 'GuestHouse', 'Room', 'Hotel']
   const stays = [
@@ -28,12 +28,10 @@ export default function ApartmentModal({
       stay: initialFilters,
     },
   })
-  // const [selectedFilters, setSelectedFilters] = useState({})
-  const [selectedFilters, setSelectedFilters] = useState<{
-    [key: string]: boolean
-  }>({})
+  const [selectedFilters, setSelectedFilters] = useState<any>({})
+
   useEffect(() => {
-    const initialSelectedFilters = stays.reduce((acc: any, stay: any) => {
+    const initialSelectedFilters = stays.reduce((acc: any, stay) => {
       acc[stay.key] = initialFilters.includes(stay.label) || false
       return acc
     }, {})
@@ -57,7 +55,7 @@ export default function ApartmentModal({
       const newState = { ...prevState, [key]: !prevState[key] }
       const selectedLabels = Object.entries(newState)
         .filter(([key, value]) => value)
-        .map(([key]) => stays.find((item) => item.key === key)?.key)
+        .map(([key]) => stays.find((item) => item.key === key)?.label)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       handleFiltersChange('stay', selectedLabels)

@@ -81,7 +81,12 @@ export default function filterBox({ toggleModal, filters }: filterBoxProps) {
                 : ''}
             </div>
           </div>
-          <div className={styles.parentCont__container__icon}>{House()}</div>
+          <div
+            className={styles.parentCont__container__icon}
+            onClick={() => toggleModal()}
+          >
+            {House()}
+          </div>
         </div>
       </div>
 
