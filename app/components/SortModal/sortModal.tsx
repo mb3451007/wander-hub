@@ -23,6 +23,10 @@ export default function SortModal({
         sortBy: newFilters,
       }
     })
+    setTimeout(() => {
+      console.log('toggleModal called after 1 second delay!')
+      toggleModal()
+    }, 100)
   }
 
   const handleDateChange = (event: any) => {
