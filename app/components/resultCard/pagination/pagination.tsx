@@ -3,14 +3,16 @@ import styles from './pagination.module.scss'
 
 interface PaginationProps {
   activeIndex: number // Active dot index
-  setActiveIndex: (index: number) => void // Function to update active index
+  setActiveIndex: (index: number) => void
+  totalImages: number // Function to update active index
 }
 
 export default function Pagination({
   activeIndex,
   setActiveIndex,
+  totalImages,
 }: PaginationProps) {
-  const dots = [0, 1, 2, 3, 4]
+  const dots = Array.from({ length: totalImages }, (_, index) => index)
   return (
     <div className={styles.container}>
       <div className={styles.container__dots}>

@@ -72,7 +72,13 @@ export default function filterBox({ toggleModal, filters }: filterBoxProps) {
             }}
           >
             <div className={styles.parentCont__container__desc__location}>
-              Apartment, Canggu
+              {filters.filters.stay.length > 0
+                ? `${filters.filters.stay[0]}`
+                : 'Stay'}
+              ,
+              {filters.filters.location.length > 0
+                ? `${filters.location[0]}`
+                : 'Location'}
             </div>
             <div className={styles.parentCont__container__desc__price}>
               {filters.filters.price.from !== '' &&

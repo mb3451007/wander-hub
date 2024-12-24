@@ -4,7 +4,6 @@ import styles from './sortAndFilter.module.scss'
 import SortIcon from '@/app/icons/SortIcon'
 import Filter from '@/app/icons/Filter'
 interface sortAndFilterProps {
-  page: string
   clearedFilter: { filterType: string; filterKey: string } | null
   onChange: (filters: any) => void
   toggleModal: () => void

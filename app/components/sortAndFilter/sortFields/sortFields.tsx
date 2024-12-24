@@ -5,6 +5,7 @@ import styles from './sortFields.module.scss'
 import Dropdown from '@/app/icons/Dropdown'
 import VerticalDivider from '@/app/icons/VerticalDivider'
 import Pound from '@/app/icons/Pound'
+import CustomDropdown from '../../customDropdown/customDropdown'
 interface sortFieldsProps {
   clearedFilter: { filterType: string; filterKey: string } | null
   onChange: (filters: any) => void
@@ -13,6 +14,9 @@ interface sortFieldsProps {
   onPriceChange: (newFilters: any) => void
   onSortByChange: (newFilters: any) => void
 }
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
+const animatedComponents = makeAnimated()
 export default function sortFields(props: sortFieldsProps) {
   const [sortBy, setSortBy] = useState('')
   const [stay, setStay] = useState([])
@@ -20,25 +24,42 @@ export default function sortFields(props: sortFieldsProps) {
   const [priceFrom, setPriceFrom] = useState('')
   const [priceTo, setPriceTo] = useState('')
   const dropdownRef = useRef<any>(null)
+  const customStyles = {
+    control: (provided: any) => ({
+      ...provided,
+      maxWidth: '100%',
+      border: '1.5px solid rgba(0, 0, 0, 0.3)',
+    }),
+    valueContainer: (provided: any) => ({
+      ...provided,
 
+      flexWrap: 'nowrap',
+      overflow: 'auto',
+    }),
+  }
   const locations = [
-    {
-      key: 'islamabad',
-      label: 'islamabad',
-    },
-    { key: 'rawalpindi', label: 'rawalpindi' },
-    { key: 'fatehjang', label: 'fatehjang' },
+    { value: 'rawalpindi', label: 'rawalpindi' },
+    { value: 'fatehjang', label: 'fatehjang' },
+    { value: 'islamabad', label: 'islamabad' },
   ]
+
   const stays = [
     {
-      key: 'apartment',
+      value: 'apartment',
       label: 'Apartment',
     },
-    { key: 'villa', label: 'Villa' },
-    { key: 'guestHouse', label: 'GuestHouse' },
-    { key: 'room', label: 'Room' },
-    { key: 'hotel', label: 'Hotel' },
+    { value: 'villa', label: 'Villa' },
+    { value: 'guestHouse', label: 'GuestHouse' },
+    { value: 'room', label: 'Room' },
+    { value: 'hotel', label: 'Hotel' },
   ]
+  const sortByOptions = [
+    { value: 'dateOldToNew', label: 'Date (old to new)' },
+    { value: 'dateNewToOld', label: 'Date (new to old)' },
+    { value: 'priceHighToLow', label: 'Price (high to low)' },
+    { value: 'priceLowToHigh', label: 'Price (low to high)' },
+  ]
+
   useEffect(() => {
     if (props.clearedFilter) {
       if (props.clearedFilter.filterKey === 'clearAll') {
@@ -49,8 +70,8 @@ export default function sortFields(props: sortFieldsProps) {
         setPriceTo('')
         setSortBy('')
 
-        setSelectedStay({})
-        setSelectedLocations({})
+        setSelectedStays([])
+        setSelectedLocations([])
         // Call your onChange functions to reset states
         props.onStayChange([])
         props.onLocationChange([])
@@ -59,11 +80,11 @@ export default function sortFields(props: sortFieldsProps) {
       } else if (props.clearedFilter.filterKey === 'stay') {
         setStay([])
         props.onStayChange([])
-        setSelectedStay({})
+        setSelectedStays([])
       } else if (props.clearedFilter.filterKey === 'location') {
         setLocation([])
         props.onLocationChange([])
-        setSelectedLocations({})
+        setSelectedLocations([])
       } else if (props.clearedFilter.filterKey === 'price') {
         setPriceFrom('')
         setPriceTo('')
@@ -115,42 +136,32 @@ export default function sortFields(props: sortFieldsProps) {
   //   }
   // }, [stay, location, date, priceFrom, priceTo, onChange])
 
-  const [selectedLocations, setSelectedLocations] = useState<{
-    [key: string]: boolean
-  }>({})
-  const [selectedStay, setSelectedStay] = useState<{ [key: string]: boolean }>(
-    {}
-  )
+  const [selectedLocations, setSelectedLocations] = useState<any[]>([])
+  const [selectedStays, setSelectedStays] = useState<any[]>([])
 
   const [locationDropdown, setLocationDropdown] = useState(false)
   const [stayDropdown, setStayDropdown] = useState(false)
-  const handleToggle = (type: any, key: any) => {
+  const handleToggle = (type: any, selectedOptions: any) => {
+    console.log('here', type, selectedOptions)
     if (type === 'location') {
-      setSelectedLocations((prevState: any) => {
-        const newState = { ...prevState, [key]: !prevState[key] }
-        const selectedLabels = Object.entries(newState)
-          .filter(([key, value]) => value)
-          .map(([key]) => locations.find((item) => item.key === key)?.label)
-
-        if (props.onLocationChange) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-          props.onLocationChange(selectedLabels)
-        }
-        return newState
+      const selectedLabels = selectedOptions.map((selectedOption: any) => {
+        return locations.find(
+          (item: any) => item.value === selectedOption.value
+        )?.label
       })
+
+      if (props.onStayChange) {
+        props.onStayChange(selectedLabels)
+      }
     } else if (type === 'stay') {
-      setSelectedStay((prevState: any) => {
-        const newState = { ...prevState, [key]: !prevState[key] }
-        const selectedLabels = Object.entries(newState)
-          .filter(([key, value]) => value)
-          .map(([key]) => stays.find((item) => item.key === key)?.label)
-
-        if (props.onStayChange) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-          props.onStayChange(selectedLabels)
-        }
-        return newState
+      const selectedLabels = selectedOptions.map((selectedOption: any) => {
+        return stays.find((item: any) => item.value === selectedOption.value)
+          ?.label
       })
+
+      if (props.onStayChange) {
+        props.onStayChange(selectedLabels)
+      }
     }
   }
 
@@ -163,10 +174,9 @@ export default function sortFields(props: sortFieldsProps) {
     }
   }
 
-  const handleDateChange = (event: any) => {
-    setSortBy(event.target.value)
+  const handleDateChange = (selectedOption: any) => {
     if (props.onSortByChange) {
-      props.onSortByChange(event.target.value)
+      props.onSortByChange(selectedOption)
     }
   }
 
@@ -178,101 +188,57 @@ export default function sortFields(props: sortFieldsProps) {
       <div className={styles.container__sortFields}>
         <div className={styles.container__sortFields__upperSection}>
           <div className={styles.container__sortFields__results}>
-            <span
-              className={styles.container__sortFields__results__resultsFound}
-            >
+            <p className={styles.container__sortFields__results__resultsFound}>
               9 Results Found
-            </span>
-            <span className={styles.container__sortFields__results__icon}>
+            </p>
+            <p className={styles.container__sortFields__results__icon}>
               {VerticalDivider()}
-            </span>
-            <span className={styles.container__sortFields__results__sortBy}>
+            </p>
+            <p className={styles.container__sortFields__results__sortBy}>
               Sort By:
-            </span>
+            </p>
           </div>
-          <select
-            name="sortBy"
-            id="sortBy"
-            className={styles.container__sortFields__date}
+
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            options={sortByOptions}
+            styles={customStyles}
             value={sortBy}
-            onChange={handleDateChange}
-          >
-            <option
-              value=""
-              disabled
-              className={styles.container__sortFields__date__text}
-            >
-              Sort By
-            </option>
-            <option value="dateOldToNew"> Date (old to new)</option>
-            <option value="dateNewToOld">Date (new to old)</option>
-            <option value="priceHighToLow">Price (high to low)</option>
-            <option value="priceLowToHigh">Price (low to high)</option>
-          </select>
-          <div className={styles.container__sortFields__date__arrowIcon}>
-            {Dropdown()}
-          </div>
+            onChange={(selectedOption: any) => {
+              setSortBy(selectedOption)
+              handleDateChange(selectedOption.value)
+            }}
+          />
         </div>
         <div className={styles.container__sortFields__lowerSection}>
           <div className="">
-            <div
-              className={styles.customDropDown}
-              onClick={() => setStayDropdown(true)}
-              ref={dropdownRef}
-            >
-              <p> Stay</p>
-              {Dropdown(20)}
-            </div>
-            {stayDropdown && (
-              <ul
-                className={styles.customList}
-                ref={dropdownRef}
-              >
-                {stays.map((stay) => {
-                  return (
-                    <li className={styles.customList__listItem}>
-                      <span>{stay.label}</span>
-                      <input
-                        className={styles.customList__listItem__checkBox}
-                        type="checkbox"
-                        checked={selectedStay[stay.key]}
-                        onChange={() => handleToggle('stay', stay.key)}
-                      />
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={stays}
+              styles={customStyles}
+              value={selectedStays}
+              onChange={(selectedOptions: any) => {
+                setSelectedStays(selectedOptions)
+                handleToggle('stay', selectedOptions)
+              }}
+            />
           </div>
           <div className="">
-            <div
-              className={styles.customDropDown}
-              onClick={() => setLocationDropdown(true)}
-              ref={dropdownRef}
-            >
-              <p> Location</p>
-              {Dropdown(20)}
-            </div>
-            {locationDropdown && (
-              <ul
-                className={styles.customList}
-                ref={dropdownRef}
-              >
-                {locations.map((location) => {
-                  return (
-                    <li className={styles.customList__listItem}>
-                      <span>{location.label}</span>
-                      <input
-                        className={styles.customList__listItem__checkBox}
-                        type="checkbox"
-                        checked={selectedLocations[location.key]}
-                        onChange={() => handleToggle('location', location.key)}
-                      />
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={locations}
+              styles={customStyles}
+              value={selectedLocations}
+              onChange={(selectedOptions: any) => {
+                setSelectedLocations(selectedOptions)
+                handleToggle('location', selectedOptions)
+              }}
+            />
           </div>
 
           <div className="">

@@ -149,15 +149,18 @@ export default function resultCard(props: ResultCardProps) {
               onChange={bedroomFilters}
             />
 
+            <hr className={styles.horizontalLine} />
+
             <BathroomFilters
               handleFilterClear={clearedFilters.bathroom}
               onChange={bathroomFilters}
             />
-
+            <hr className={styles.horizontalLine} />
             <Amenities
               handleFilterClear={clearedFilters.amenities}
               onChange={AmenitiesFilters}
             />
+            <hr className={styles.horizontalLine} />
 
             <Additionally
               handleFilterClear={clearedFilters.additionally}

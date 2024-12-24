@@ -3,7 +3,6 @@ import styles from './filterModal.module.scss'
 import Close from '@/app/icons/Close'
 
 import Pound from '@/app/icons/Pound'
-import Backspace from '@/app/icons/Backspace'
 
 interface sortAndFilterProps {
   filters: any
@@ -106,59 +105,20 @@ export default function FilterModal(props: sortAndFilterProps) {
     props.onFiltersChange({ filters: clearedFilters })
   }
 
-  const [keypad, setKeypad] = useState(false)
-  const [activeInput, setActiveInput] = useState(null)
   const [priceFrom, setPriceFrom] = useState(
     props.filters.filters.price.from || ''
   )
   const [priceTo, setPriceTo] = useState(props.filters.filters.price.to || '')
-  const keypadRef = useRef<any>(null)
-  const inputRef = useRef<any>(null)
 
-  const handleDigitClick = (digit: any) => {
-    if (activeInput === 'from') {
-      const updatedPriceFrom = priceFrom + digit
-      setPriceFrom(updatedPriceFrom)
-      handleFiltersChange('price', { from: updatedPriceFrom, to: priceTo })
-    } else if (activeInput === 'to') {
-      const updatedPriceTo = priceTo + digit
-      setPriceTo(updatedPriceTo)
-      handleFiltersChange('price', { from: priceFrom, to: updatedPriceTo })
-    }
+  const onPriceFromChange = (e: any) => {
+    setPriceFrom(e.target.value)
+    handleFiltersChange('price', { from: e.target.value, to: priceTo })
   }
 
-  const handleBackspace = () => {
-    if (activeInput === 'from') {
-      setPriceFrom(priceFrom.slice(0, -1))
-    } else if (activeInput === 'to') {
-      setPriceTo(priceTo.slice(0, -1))
-    }
+  const onPriceToChange = (e: any) => {
+    setPriceTo(e.target.value)
+    handleFiltersChange('price', { from: priceFrom, to: e.target.value })
   }
-
-  const handleInputFocus = (inputType: any) => {
-    setActiveInput(inputType)
-    setKeypad(true)
-  }
-  useEffect(() => {
-    // Function to hide keypad when clicked outside
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        keypadRef.current &&
-        !keypadRef.current.contains(event.target as Node) &&
-        !inputRef.current.contains(event.target as Node)
-      ) {
-        setKeypad(false)
-      }
-    }
-
-    // Add event listener for clicks outside
-    document.addEventListener('mousedown', handleClickOutside)
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
 
   return (
     <>
@@ -189,14 +149,12 @@ export default function FilterModal(props: sortAndFilterProps) {
               className={
                 styles.priceSectionContainer__innerContainer__inputBoxContainer
               }
-              ref={inputRef}
             >
               <input
                 type="number"
                 placeholder="From"
                 value={priceFrom}
-                onFocus={() => handleInputFocus('from')}
-                readOnly
+                onChange={onPriceFromChange}
               />
               {Pound()}
             </div>
@@ -204,14 +162,12 @@ export default function FilterModal(props: sortAndFilterProps) {
               className={
                 styles.priceSectionContainer__innerContainer__inputBoxContainer
               }
-              ref={inputRef}
             >
               <input
                 type="number"
                 placeholder="To"
                 value={priceTo}
-                onFocus={() => handleInputFocus('to')}
-                readOnly
+                onChange={onPriceToChange}
               />
               {Pound()}
             </div>
@@ -376,55 +332,6 @@ export default function FilterModal(props: sortAndFilterProps) {
           </button>
         </div>
       </div>
-      {keypad && (
-        <div
-          className={styles.keypadContainer}
-          ref={keypadRef}
-        >
-          <div className={styles.keypadContainer__buttonContainer}>
-            {digits.map((digit) => {
-              const [number, letters] = digit.label.split(' ')
-              return (
-                <div
-                  className={styles.keypadContainer__buttonContainer__button}
-                  onClick={() => handleDigitClick(digit.key)}
-                >
-                  {number}
-
-                  {letters && <span>{letters}</span>}
-                </div>
-              )
-            })}
-
-            <div
-              className={styles.keypadContainer__buttonContainer__button}
-              style={{
-                background: 'transparent',
-                boxShadow: 'none',
-                border: 'none',
-              }}
-            ></div>
-
-            <div
-              className={styles.keypadContainer__buttonContainer__button}
-              onClick={() => handleDigitClick(0)}
-            >
-              0
-            </div>
-            <div
-              className={styles.keypadContainer__buttonContainer__button}
-              style={{
-                background: 'transparent',
-                boxShadow: 'none',
-                border: 'none',
-              }}
-              onClick={handleBackspace}
-            >
-              {Backspace()}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 }

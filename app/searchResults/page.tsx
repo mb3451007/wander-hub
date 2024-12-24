@@ -27,6 +27,7 @@ import image4 from '../../assets/bike.jpeg'
 import image5 from '../../assets/room.jpeg'
 import Close from '../icons/Close'
 import Pound from '../icons/Pound'
+import CustomDropdown from '../components/customDropdown/customDropdown'
 
 const SearchResults = () => {
   const [clearSort, setClearSort] = useState('')

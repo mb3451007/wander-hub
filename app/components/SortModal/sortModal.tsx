@@ -37,6 +37,7 @@ export default function SortModal({
     console.log('Updated filters:desktop view', filters)
     onFiltersChange({ sortBy: filters.sortBy })
   }, [filters])
+
   return (
     <div className={styles.sortModal}>
       <div className={styles.sortModalSubContainer__innerContainer}>

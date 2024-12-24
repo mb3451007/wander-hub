@@ -77,6 +77,7 @@ export default function PopularListing(props: PopularListingProps) {
           ))}
           <Pagination
             activeIndex={activeIndex}
+            totalImages={images.length}
             setActiveIndex={setActiveIndex}
           />
           <div className={styles.popularListing__image__arrows}>
@@ -148,21 +149,22 @@ export default function PopularListing(props: PopularListingProps) {
           {images.map((image, index) => (
             // <div  key={index} className={styles.popularListing__image}>
 
-              <div
-               key={index}
-                className={`${styles.popularListing__image__inner} ${
-                  index === activeIndex ? styles.active : ''
-                }`}
-                style={{
-                  backgroundImage: `url(${image})`,
-                }}
-              ></div>
+            <div
+              key={index}
+              className={`${styles.popularListing__image__inner} ${
+                index === activeIndex ? styles.active : ''
+              }`}
+              style={{
+                backgroundImage: `url(${image})`,
+              }}
+            ></div>
             // </div>
           ))}
           <div className={styles.card__heart}>
             <div className={styles.card__heart__icon}>{Heart()}</div>
           </div>
           <Pagination
+            totalImages={images.length}
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
           />
