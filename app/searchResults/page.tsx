@@ -556,6 +556,7 @@ const SearchResults = () => {
 
       {isSortModalOpen && (
         <SortModal
+          show={isSortModalOpen}
           filters={filters.sortBy}
           toggleModal={toggleSortModal}
           onFiltersChange={(updatedFilters: any) =>

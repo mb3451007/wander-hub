@@ -6,11 +6,13 @@ interface sortModalProps {
   filters: any
   onFiltersChange: (filters: any) => void
   toggleModal: () => void
+  show: boolean
 }
 export default function SortModal({
   toggleModal,
   filters: initialFilters,
   onFiltersChange,
+  show,
 }: sortModalProps) {
   const [filters, setFilters] = useState({
     sortBy: initialFilters || '',
@@ -39,7 +41,7 @@ export default function SortModal({
   }, [filters])
 
   return (
-    <div className={styles.sortModal}>
+    <div className={`${styles.sortModal} ${show ? styles.open : ''}`}>
       <div className={styles.sortModalSubContainer__innerContainer}>
         <hr
           className={
