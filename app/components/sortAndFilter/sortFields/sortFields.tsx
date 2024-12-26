@@ -25,16 +25,30 @@ export default function sortFields(props: sortFieldsProps) {
   const [priceTo, setPriceTo] = useState('')
   const dropdownRef = useRef<any>(null)
   const customStyles = {
-    control: (provided: any) => ({
-      ...provided,
+    control: (baseStyles: any, state: any) => ({
+      ...baseStyles,
       maxWidth: '100%',
-      border: '1.5px solid rgba(0, 0, 0, 0.3)',
+      border: state.isFocused
+        ? '1.5px solid black'
+        : '1.5px solid rgba(0, 0, 0, 0.3)',
+      boxShadow: 'none',
+      '&:hover': {
+        border: '1.5px solid black',
+        boxShadow: 'none',
+      },
+    }),
+    indicatorSeparator: (provided: any) => ({
+      ...provided,
+      display: 'none',
     }),
     valueContainer: (provided: any) => ({
       ...provided,
-
       flexWrap: 'nowrap',
       overflow: 'auto',
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      zIndex: '999',
     }),
   }
   const locations = [
@@ -227,6 +241,7 @@ export default function sortFields(props: sortFieldsProps) {
                 setSelectedStays(selectedOptions)
                 handleToggle('stay', selectedOptions)
               }}
+              placeholder="Stays"
             />
           </div>
           <div className="">
@@ -241,6 +256,7 @@ export default function sortFields(props: sortFieldsProps) {
                 setSelectedLocations(selectedOptions)
                 handleToggle('location', selectedOptions)
               }}
+              placeholder="Location"
             />
           </div>
 
