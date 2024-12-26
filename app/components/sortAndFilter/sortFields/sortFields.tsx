@@ -150,8 +150,8 @@ export default function sortFields(props: sortFieldsProps) {
         )?.label
       })
 
-      if (props.onStayChange) {
-        props.onStayChange(selectedLabels)
+      if (props.onLocationChange) {
+        props.onLocationChange(selectedLabels)
       }
     } else if (type === 'stay') {
       const selectedLabels = selectedOptions.map((selectedOption: any) => {
@@ -180,6 +180,9 @@ export default function sortFields(props: sortFieldsProps) {
     }
   }
 
+  useEffect(() => {
+    console.log(selectedLocations, '--------------seleceted locations')
+  }, [selectedLocations])
   useEffect(() => {
     handlePriceChange()
   }, [priceFrom, priceTo])

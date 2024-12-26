@@ -77,7 +77,7 @@ export default function filterBox({ toggleModal, filters }: filterBoxProps) {
                 : 'Stay'}
               ,
               {filters.filters.location.length > 0
-                ? `${filters.location[0]}`
+                ? `${filters.filters.location[0]}`
                 : 'Location'}
             </div>
             <div className={styles.parentCont__container__desc__price}>
